@@ -1,0 +1,12 @@
+tr {
+    border: none;
+    font-family: 'Inter';
+    font-size: small;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+tbody tr:hover {
+    transform: scale(1.03);
+    box-shadow: 1px 1px 3px grey;
+}

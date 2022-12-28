@@ -1,0 +1,139 @@
+<div>
+    <div class="w-75 m-auto d-flex align-items-center" id="searchBar">
+        <input type="text" #search (input)="onSearch(search.value)"
+            placeholder="Saisissez votre recherche ici : Nom, Prénoms, Téléphone, Direction, Fonction etc....">
+        <span>
+            <i class="fa fa-search px-3 text-info" aria-hidden="true"></i>
+        </span>
+    </div>
+
+    <div *ngIf="loading" class="mt-3 text-center">
+        <div style="width: max-content;" class="m-auto">
+          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+            <span  class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    
+    <div 
+        id="carouselExampleCaptions" 
+        class="carousel slide mt-3" 
+        data-interval="5000" 
+        data-ride="carousel"
+        *ngIf="varAffich == 0">
+        <ol class="carousel-indicators">
+            <li 
+                *ngFor="let slide of slides; let i = index"
+                data-target="#carouselExampleCaptions"
+                [attr.data-slide-to]="i"
+            ></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item {{ i == 0 ? 'active' : ''}}" *ngFor="let slide of slides; let i = index">
+                <img [src]="slide.lien" class="d-block w-100" style="height: 80vh;">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-target="#carouselExampleCaptions" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-target="#carouselExampleCaptions" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </button>
+    </div>
+
+    <!-- En cas de résulat nul -->
+    <div 
+        *ngIf="nbrEnr == 0 && !loading"
+        class="w-100 p-5 d-flex flex-column align-items-center justify-content-center animate__animated animate__bounceIn" style="height: 80vh;">
+        <h6>Aucun résultat trouvé</h6>
+        <img src="assets/images/undraw_No_data_re_kwbl.png" alt="" class="img-fluid h-100">
+    </div>
+
+    <!-- Si résulat trouvé -->
+    <div class="card bg-transparent mt-3 animate__animated animate__fadeInUp" *ngIf="varAffich == 1 && !loading && nbrEnr > 0">
+        <div class="card-header text-success">
+            <strong>{{ nbrEnr }} Résultat(s) trouvé(s) pour la recherche</strong>
+        </div>
+        <div class="card-body p-3 row">
+            <div class="col-sm-3 mb-4" *ngFor="let personnel of personnels">
+                <div class="card-profile card mat-elevation-z3 text-white p-2" style="border-radius: 20px;">
+                    <p class="py-1 rounded-pill w-50 border text-center text-info">
+                        <strong>{{ personnel.Matricule }}</strong>
+                    </p>
+                    <div class="m-auto rounded-circle d-flex align-items-center justify-content-center"
+                        id="imageContainer">
+                        <div id="user-profile" class="rounded-circle shadow">
+                            <img [src]="personnel.Photo" alt="Photo de profile" class="img-fluid w-100 h-100 rounded-circle">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center">
+                            <h5 class="card-title text-center text-danger text-overflow" style="font-family: 'Ubuntu';">
+                                {{ personnel.NomPrenoms }}
+                            </h5>
+                            &nbsp;&nbsp;
+                        </div>
+                        <p class="text-center text-dark mb-1 mt-0 text-overflow" style="font-size: small;">
+                            {{ personnel.Fonction }}
+                        </p>
+                        <p class="text-center bg-primary text-white p-1 mb-1 text-overflow" style="font-size: small;">
+                            {{ personnel.LibelleService }}
+                        </p>
+                        <p class="text-center bg-info text-white p-1 mb-1" style="font-size: small;">
+                            <i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;
+                            {{ personnel.Mobile }}
+                        </p>
+                        <p class="text-center text-dark p-1" style="font-size: medium;">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;&nbsp;
+                            {{ personnel.Email }}
+                        </p>
+                        <hr>
+                        <div style="width: 30px;" class="m-auto">
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 17.026 17.026"
+                                style="enable-background:new 0 0 17.026 17.026;" xml:space="preserve">
+                                <g>
+                                    <g>
+                                        <path style="fill:#030104;" d="M6.719,0h-1.05C5.114,0,4.664,0.45,4.664,1.005v12.622c0,0.548,0.439,0.993,0.985,1.004
+                                            c-0.172,0.875-0.945,1.538-1.869,1.538c-1.051,0-1.907-0.857-1.907-1.907V9.45c0-0.238-0.192-0.43-0.429-0.43
+                                            s-0.43,0.191-0.43,0.43v4.812c0,1.524,1.241,2.764,2.766,2.764c1.397,0,2.554-1.044,2.737-2.393H6.72
+                                            c0.555,0,1.006-0.451,1.006-1.006V1.006C7.725,0.451,7.274,0,6.719,0z" />
+                                        <path style="fill:#030104;"
+                                            d="M15.159,1.595h-7.01V13.89h7.01c0.472,0,0.853-0.381,0.853-0.852V2.447
+                                            C16.012,1.976,15.631,1.595,15.159,1.595z M10.812,12.631h-1.49v-1.489h1.49V12.631z M10.812,10.556h-1.49v-1.49h1.49V10.556z
+                                            M10.823,8.495h-1.49v-1.49h1.49V8.495z M12.942,12.631h-1.491v-1.489h1.491V12.631z M12.942,10.556h-1.491v-1.49h1.491V10.556z
+                                            M12.952,8.495h-1.491v-1.49h1.491V8.495z M15.071,12.631h-1.49v-1.489h1.49V12.631z M15.071,10.556h-1.49v-1.49h1.49V10.556z
+                                            M15.082,8.495h-1.491v-1.49h1.491V8.495z M15.088,4.085H9.073V2.328h6.015V4.085z" />
+                                        <path style="fill:#030104;" d="M3.696,13.89h0.521V1.595H3.696c-0.47,0-0.852,0.382-0.852,0.852v10.592
+                                            C2.844,13.509,3.226,13.89,3.696,13.89z" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </div>
+                        <p class="text-danger text-center">
+                            <strong>
+                                {{ personnel.TelBureau.length == '' ? '-' : personnel.TelBureau }}
+                            </strong>
+                        </p>
+                        <div style="font-size: small; font-family: 'Ubuntu'">
+                            <button 
+                                class="btn btn-outline-info btn-sm rounded-pill w-100" 
+                                (click)="openDialog(personnel)">
+                                <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;&nbsp;
+                                Voir plus
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,86 @@
+<div class="card animate__animated animate__fadeIn">
+    <div class="card-header text-info">
+        <i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;
+        <strong>Numéros utiles</strong>
+    </div>
+    <div *ngIf="loading" class="card-body">
+        <div style="width: max-content;" class="m-auto">
+          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+            <span  class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    <div class="card-body" *ngIf="sites.length > 0 && !loading">
+        <div class="accordion" id="accordionExample">
+            <div class="card mb-2" *ngFor="let site of sites">
+                <div class="card-header p-0">
+                    <h2 class="mb-0">
+                        <button class="btn btn-block text-left" type="button" data-toggle="collapse"
+                            [attr.data-target]="'#S' + site.Id" aria-expanded="true"
+                            (click)="getNumBySite(site.Id)">
+                            <i class="fa fa-building" aria-hidden="true"></i>&nbsp;&nbsp;
+                            {{ site.LibelleSite }}
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="{{ 'S' + site.Id }}" class="collapse"
+                    data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div *ngIf="loadingNum" class="card-body">
+                            <div style="width: max-content;" class="m-auto">
+                              <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+                                <span  class="sr-only">Loading...</span>
+                              </div>
+                              <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                              <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+                                <span class="sr-only">Loading...</span>
+                              </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center" *ngIf="numerosUtiles.length == 0 && !loadingNum">
+                            Aucun numéro
+                        </div>
+
+                        <div class="row" *ngIf="numerosUtiles.length == 1 && !loadingNum">
+                            <div class="col-6 px-2">
+                                <div style="font-size: small;"
+                                    class="d-flex justify-content-between" 
+                                    *ngFor="let numeroutile of numerosUtiles">
+                                    <p>{{ numeroutile.LibelleNumeroUtile }}</p>
+                                    <p class="text-danger">
+                                        <strong>{{ numeroutile.Numero }}</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="numerosUtiles.length > 1 && !loadingNum" class="row">
+                            <div 
+                                class="col-4 px-2" 
+                                *ngFor="let nbr of [].constructor(3); let i = index">
+                                <div style="font-size: small;"
+                                    class="d-flex justify-content-between" 
+                                    *ngFor="let numeroutile of numerosUtiles[i]">
+                                    <p>{{ numeroutile.LibelleNumeroUtile }}</p>
+                                    <p class="text-danger">
+                                        <strong>{{ numeroutile.Numero }}</strong>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

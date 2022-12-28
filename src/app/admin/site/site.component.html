@@ -1,0 +1,166 @@
+<div class="animate__animated animate__fadeIn">
+    <div class="d-flex justify-content-between">
+        <div class="input-group w-50">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">
+                    <i class="fa fa-search"></i>
+                </span>
+            </div>
+            <input 
+                #search
+                (input)="onSearch(search.value)"
+                type="search" 
+                class="form-control" 
+                placeholder="Recherche...">
+        </div>
+        <button class="btn btn-info" data-toggle="collapse" data-target="#collapseExample" [disabled]="update">
+            <i class="fa fa-building"></i>&nbsp;&nbsp;
+            {{ update ? 'Modifier site' : 'Nouveau site' }}
+        </button>
+    </div>
+    
+    <div class="card mt-3 collapse {{ update ? 'show' : ''}}" id="collapseExample">
+        <div class="card-header d-flex justify-content-between">
+            <div>
+                <i class="fa fa-building"></i>&nbsp;&nbsp;
+                {{ update ? 'Modifier site' : 'Nouveau site' }}
+            </div>
+            <button 
+                (click)="onCancel()"
+                class="btn m-0 py-0 px-1" 
+                data-toggle="collapse" 
+                data-target="#collapseExample">
+                <i class="fa fa-close"></i>
+            </button>
+        </div>
+        <form 
+            novalidate
+            [formGroup]="formGroup"
+            (ngSubmit)="onSubmitForm()"
+            class="card-body d-flex align-items-center justify-content-center">
+            <div class="input-group w-75">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-info" id="basic-addon1">
+                        <i class="fa fa-building text-white"></i>
+                    </span>
+                </div>
+                <input 
+                    formControlName="libellesite"
+                    type="text" 
+                    class="form-control" 
+                    placeholder="...">
+            </div>
+            <button 
+                class="btn btn-success ml-3"
+                [disabled]="formGroup.invalid"
+            >
+                <i class="fa fa-save"></i>&nbsp;&nbsp;
+                {{ update ? 'Modifier' : 'Enregistrer' }}
+            </button>
+        </form>
+    </div>
+
+    <div class="my-3 text-center" *ngIf="loadingEdit">
+        <div style="width: max-content;" class="m-auto">
+          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+            <span  class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+    </div>
+
+    <div class="card border-0 mt-3 mat-elevation-z3">
+        <div class="card-header bg-info text-white">
+            <i class="fa fa-building text-white"></i>&nbsp;&nbsp;
+            <strong>LISTE DES SITES</strong>
+        </div>
+        <div class="card-body p-0">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID.</th>
+                        <th>Intitulé</th>
+                        <th width="150"></th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="sites.length == 0 && !loading">
+                    <tr align="center">
+                        <td colspan="3">Aucune donnée trouvée.</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="loading">
+                    <tr align="center">
+                        <td colspan="3">
+                            <div class="card-body">
+                                <div style="width: max-content;" class="m-auto">
+                                  <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+                                    <span  class="sr-only">Loading...</span>
+                                  </div>
+                                  <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                  </div>
+                                  <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                  </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="sites.length > 0 && !loading">
+                    <tr *ngFor="let site of sites | paginate
+                    : {
+                        itemsPerPage: tableSize,
+                        currentPage: page,
+                        totalItems: count
+                      };
+                      let i = index">
+                        <td>{{ site.Id }}</td>
+                        <td>{{ site.LibelleSite }}</td>
+                        <td width="150" class="d-flex">
+                            <button 
+                                (click)="onUpdate(site)"
+                                class="btn btn-outline-primary btn-sm"
+                            >
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button
+                                class="btn btn-outline-danger btn-sm ml-3"
+                                (click)="onDelete(site.Id)"
+                            >
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div 
+            class="px-2 d-flex justify-content-end align-items-center" 
+            style="font-size: smaller;" 
+            *ngIf="sites.length > 0">
+            <p>Total : [ {{ sites.length }} ]</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          
+            <div class="d-flex mr-3">
+              Enregistrements par page :&nbsp;&nbsp;
+              <select id="items-per-page" #value class="mr-3 mb-3" (change)="changeSize(value.value)">
+                <option *ngFor="let size of tableSizes" [value]="size">{{ size }}</option>
+              </select>
+            </div>
+          
+            <div class="d-flex justify-content-center">
+              <pagination-controls
+                previousLabel="Précédent"
+                nextLabel="Suivant"
+                (pageChange)="onTableDataChange($event)"
+              >
+              </pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

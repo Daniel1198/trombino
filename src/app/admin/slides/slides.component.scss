@@ -1,0 +1,24 @@
+img {
+    cursor: pointer;
+}
+
+.options {
+    visibility: hidden;
+}
+
+img:hover ~ .options {
+    visibility: visible;
+}
+
+.options:hover {
+    visibility: visible;
+}
+
+input[type="file"] {
+    width: 0px;
+    visibility: hidden;
+    position: absolute;
+	z-index: -1;
+}
+
+

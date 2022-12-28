@@ -1,0 +1,184 @@
+<div class="d-flex justify-content-between animate__animated animate__fadeIn">
+    <div class="card w-25 border-0" style="height: min-content;">
+        <div class="card-header border-0 bg-transparent text-info">
+            <i class="fa fa-question-circle" aria-hidden="true"></i>&nbsp;&nbsp;
+            <strong>Critères de recherche</strong>
+        </div>
+        <div class="card-body p-3">
+            <input 
+                type="text" 
+                placeholder="Nom & Prénom(s)" 
+                class="mb-4 form-control form-control-sm"
+                [(ngModel)]="selectedonePersonnelRech.NomPrenoms" 
+                (input)="recherche(sexe.value, serviceId.value)"
+            >
+            <input 
+                type="text" 
+                placeholder="Matricule" 
+                class="mb-4 form-control form-control-sm"
+                [(ngModel)]="selectedonePersonnelRech.Matricule" 
+                (input)="recherche(sexe.value, serviceId.value)"
+            >
+            <input 
+                type="text" 
+                placeholder="Poste (Fixe)" 
+                class="mb-3 form-control form-control-sm"
+                [(ngModel)]="selectedonePersonnelRech.TelBureau" 
+                (input)="recherche(sexe.value, serviceId.value)"
+            >
+            <div class="form-group mb-3">
+                <label for="sexe" class="form-label">Sexe</label>
+                <select
+                    #sexe 
+                    (change)="recherche(sexe.value, serviceId.value)" 
+                    class="form-control form-control-sm">
+                    <option value="" selected>-- Choisir --</option>
+                    <option value="M">Masculin</option>
+                    <option value="F">Féminin</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label for="direction" class="form-label">Direction</label>
+                <select 
+                    class="form-control form-control-sm" 
+                    #directionId
+                    (change)="getDirectionDepartements(directionId.value, sexe.value, serviceId.value)">
+                    <option value="">-- Choisir --</option>
+                    <option 
+                        *ngFor="let direction of directions"
+                        [value]="direction.Id_direction" 
+                    >{{ direction.LibelleDirection }}</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label for="departement" class="form-label">Département</label>
+                <select 
+                    class="form-control form-control-sm"
+                    #departementId
+                    (change)="getDepartementServices(departementId.value, sexe.value, serviceId.value)">
+                    <option value="">-- Choisir --</option>
+                    <option 
+                        *ngFor="let departement of departements"
+                        [value]="departement.Id" 
+                    >{{ departement.LibelleDepartement }}</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label for="service" class="form-label">Service</label>
+                <select 
+                    class="form-control form-control-sm"
+                    #serviceId
+                    (change)="recherche(sexe.value, serviceId.value)"
+                >
+                    <option value="" selected>-- Choisir --</option>
+                    <option 
+                        *ngFor="let service of services"
+                        [value]="service.Id" 
+                    >{{ service.LibelleService }}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div 
+        *ngIf="!startSearch"
+        class="w-75 d-flex flex-column p-5 align-items-center justify-content-center animate__animated animate__fadeIn" style="height: 85vh;">
+        <h6>En attente de votre recherche ...</h6>
+        <img src="assets/images/undraw_People_search_re_5rre.png" alt="" class="img-fluid h-100">
+    </div>
+
+    <div *ngIf="loading" class="text-center w-75 d-flex flex-column align-items-center justify-content-center" style="height: 85vh;">
+        <div style="width: max-content;" class="m-auto">
+            <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+                <span  class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- En cas de résulat nul -->
+    <div 
+        *ngIf="listPersonnel.length == 0 && startSearch && !loading"
+        class="w-75 p-5 d-flex flex-column align-items-center justify-content-center animate__animated animate__fadeInDown" style="height: 85vh;">
+        <h6>Aucun résultat trouvé</h6>
+        <img src="assets/images/undraw_No_data_re_kwbl.png" alt="" class="img-fluid h-100">
+    </div>
+
+    <!-- En cas de résultat non nul -->
+    <div 
+        *ngIf="listPersonnel.length > 0 && !loading"
+        class="card text-white w-75 ml-3 mat-elevation-z2 animate__animated animate__fadeInDown">
+        <div class="card-header text-success">
+            <i class="fa fa-list-check" aria-hidden="true"></i>&nbsp;&nbsp;
+            <strong>{{ listPersonnel.length }} résultat(s) pour la recherche</strong>
+        </div>
+        <div class="card-body overflow-auto pt-0" style="height: 80vh;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Nom</th>
+                        <th>Prénom(s)</th>
+                        <th>
+                            <i class="fa fa-mobile text-info" aria-hidden="true"></i>&nbsp;&nbsp;
+                            Téléphone
+                        </th>
+                        <th>
+                            <i class="fa fa-phone text-info" aria-hidden="true"></i>&nbsp;&nbsp;
+                            Fixe
+                        </th>
+                        <th>
+                            <i class="fa fa-envelope text-info" aria-hidden="true"></i>&nbsp;&nbsp;
+                            Email
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let personnel of listPersonnel | paginate
+                    : {
+                        itemsPerPage: tableSize,
+                        currentPage: page,
+                        totalItems: count
+                      };
+                      let i = index" (click)="openDialog(personnel)">
+                        <td>
+                            <div class="rounded-circle shadow bg-danger" style="height: 30px; width: 30px;">
+                                <img [src]="personnel.Photo" alt="photo de profile"
+                                    class="img-fluid w-100 h-100 rounded-circle">
+                            </div>
+                        </td>
+                        <td>{{ personnel.Nom }}</td>
+                        <td>{{ personnel.Prenoms }}</td>
+                        <td>{{ personnel.Mobile }}</td>
+                        <td>{{ personnel.TelBureau }}</td>
+                        <td>{{ personnel.Email }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="px-2 d-flex justify-content-end align-items-center" style="font-size: smaller;" *ngIf="listPersonnel.length > 0">
+                <p>Total : [ {{ listPersonnel.length }} ]</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              
+                <div class="d-flex mr-3">
+                  Enregistrements par page :&nbsp;&nbsp;
+                  <select id="items-per-page" #value class="mr-3 mb-3" (change)="changeSize(value.value)">
+                    <option *ngFor="let size of tableSizes" [value]="size">{{ size }}</option>
+                  </select>
+                </div>
+              
+                <div class="d-flex justify-content-center">
+                  <pagination-controls
+                    previousLabel="Précédent"
+                    nextLabel="Suivant"
+                    (pageChange)="onTableDataChange($event)"
+                  >
+                  </pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

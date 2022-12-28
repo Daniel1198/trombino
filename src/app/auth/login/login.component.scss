@@ -1,0 +1,10 @@
+#back {
+    background-image: url('../../../assets/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+label, a, input[type="submit"] {
+    font-size: smaller;
+}
