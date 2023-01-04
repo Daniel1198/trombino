@@ -23,7 +23,7 @@
                             <i class="link fa fa-phone" aria-hidden="true"></i>
                         </a>
                     </li>
-                    <div *ngIf="connected">
+                    <div *ngIf="connected && connected.success">
                         <li matTooltip="Site" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
                             <a [routerLink]="['/admin/site']">
                                 <i class="link fa fa-building" aria-hidden="true"></i>
@@ -60,7 +60,7 @@
                             </a>
                         </li>
                         
-                        <li matTooltip="Utilisateur" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
+                        <li *ngIf="connected && connected.results.Administrateur == 1" matTooltip="Utilisateur" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
                             <a [routerLink]="['/admin/utilisateur']">
                                 <i class="link fa fa-user" aria-hidden="true"></i>
                             </a>

@@ -16,7 +16,7 @@ export class PagePrincipaleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.connected = this.authService.loggedInUserValue
+    this.connected = this.authService.loggedInUserValue 
   }
 
   onSignOut() {
