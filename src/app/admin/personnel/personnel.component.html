@@ -10,8 +10,8 @@
                 type="search" 
                 class="form-control" 
                 placeholder="Recherche..."
-                [(ngModel)]="search"
-                (input)="onSearch()"
+                #search
+                (input)="onSearch(search.value)"
             >
         </div>
         <a [routerLink]="['/admin/personnel/edit', 0]" class="btn btn-info">

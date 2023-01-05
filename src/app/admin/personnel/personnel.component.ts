@@ -16,7 +16,6 @@ export class PersonnelComponent implements OnInit {
 
   personnels: any = [];
   nbrEnr: number = 0;
-  search!: string;
   loading: boolean = false;
   
   constructor(
@@ -61,17 +60,23 @@ export class PersonnelComponent implements OnInit {
     }
   }
 
-  onSearch() {
-    this.loading = true;
-    this.personnelService.recherchepersonnelmulticritere(this.search).subscribe(
-      result => {
-        this.loading = false;
-        this.personnels = result;
-        if (result !== null) {
-          this.nbrEnr = result.length;
+  onSearch(search: string) {
+    if (search.trim() != '') {
+      this.loading = true;
+      this.personnelService.recherchepersonnelmulticritere(search).subscribe(
+        result => {
+          this.loading = false;
+          this.personnels = result;
+          if (result !== null) {
+            this.nbrEnr = result.length;
+          }
+          this.page = 1
         }
-      }
-    )
+      )
+    }
+    else {
+      this.getAllEmployee();
+    }
   }
 
   changeSize(value: string) {
