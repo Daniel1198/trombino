@@ -1,45 +1,27 @@
-mat-sidenav-container {
-    height: 100vh;
-}
-
-mat-sidenav {
-    width: 90px;
-    background-color: #3f729b;
-}
-
-#scroll-menu::-webkit-scrollbar {
-    width: 5px;
-}
-
-#scroll-menu::-webkit-scrollbar-thumb {
-    background-color: rgb(94, 94, 94);
-}
-
-li {
-    list-style: none;
-    text-align: center;
-    padding-block: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-bottom: 10px;
-}
-
-li:hover:not(.current) {
-    background-color: rgba(128, 128, 128, 0.226);
-}
-
-.current {
-    background-color: #17a2b8;
-}
-
 a {
-    color: white;
-    padding: 11px;
+    font-family: 'Montserrat';
+    font-size: small;
+    text-decoration: none;
+    color: #1c344ed3;
+    font-weight: 500;
+    padding-block: 15px;
+    padding-inline: 15px;
+    border-radius: 5px;
+    transition: 0.1s;
+
+    &:hover {
+        color: #1b4e85;
+        background-color: rgba(0, 0, 0, 0.068);
+        border-top: 3px solid #1b4e85;
+    }
+
+    &.current {
+        color: #1b4e85;
+        background-color: rgba(0, 0, 0, 0.068);
+        border-top: 3px solid #1b4e85;
+    }
 }
 
-#content {
-    display: grid;
-    align-items: start;
-    align-content: space-between;
-    grid-template-columns: 89px;
+h5 {
+    color: #2c5989d3;
 }
