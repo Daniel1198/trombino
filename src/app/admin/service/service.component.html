@@ -1,44 +1,32 @@
 <div class="animate__animated animate__fadeIn">
     <div class="d-flex justify-content-between">
         <div class="input-group w-50">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">
-                    <i class="fa fa-search" aria-hidden="true"></i>
-                </span>
-            </div>
             <input 
                 #search
                 (input)="onSearch(search.value)"
                 type="search" 
-                class="form-control" 
+                class="input__search w-100" 
                 placeholder="Recherche...">
         </div>
-        <button class="btn btn-info" data-toggle="collapse" data-target="#collapseExample" [disabled]="update">
-            <i class="fa fa-users-gear" aria-hidden="true"></i>&nbsp;&nbsp;
-            {{ update ? 'Modifier le service' : 'Nouveau service' }}
+        <button class="bt bt--blue" data-toggle="collapse" data-target="#collapseExample" [disabled]="update">
+            -- {{ update ? 'Modifier le service' : 'Nouveau service' }}
         </button>
     </div>
     
     <div class="card mt-3 collapse {{ update ? 'show' : '' }}" id="collapseExample">
-        <div class="card-header d-flex justify-content-between">
+        <div class="bg-light py-1 px-3 mb-3 txt txt--blue d-flex justify-content-between">
             <div>
-                <i class="fa fa-users-gear" aria-hidden="true"></i>&nbsp;&nbsp;
-                {{ update ? 'Modifier le service' : 'Nouveau service' }}
+                -- {{ update ? 'Modifier le service' : 'Nouveau service' }}
             </div>
             <button class="btn m-0 py-0 px-1" data-toggle="collapse" data-target="#collapseExample" (click)="onCancel()">
                 <i class="fa fa-close" aria-hidden="true"></i>
             </button>
         </div>
-        <form class="card-body d-flex align-items-center justify-content-center" [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
+        <form class="d-flex mb-3 align-items-end justify-content-center" [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
             <div class="input-group ml-3" style="width: 30%;">
-                <div class="input-group-prepend">
-                    <span class="input-group-text bg-info text-white" id="basic-addon1">
-                        <i class="fa fa-users-gear" aria-hidden="true"></i>&nbsp;
-                        Direction
-                    </span>
-                </div>
+                <label for="direction" class="form__label">Direction <span class="text-danger">*</span></label>
                 <select 
-                    class="form-control" 
+                    class="form__select w-100" 
                     formControlName="direction" 
                     #id
                     (change)="getDirectionDepartements(id.value)">
@@ -49,14 +37,9 @@
                 </select>
             </div>
 
-            <div class="input-group ml-3" style="width: 30%;">
-                <div class="input-group-prepend">
-                    <span class="input-group-text bg-info text-white" id="basic-addon1">
-                        <i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;
-                        Département
-                    </span>
-                </div>
-                <select class="form-control" formControlName="departement">
+            <div class="form__group ml-3" style="width: 30%;">
+                <label for="departement" class="form__label">Département <span class="text-danger">*</span></label>
+                <select class="form__select w-100" formControlName="departement">
                     <option value="">-- Choisir --</option>
                     <option 
                         *ngFor="let departement of departements"
@@ -64,17 +47,12 @@
                 </select>
             </div>
 
-            <div class="input-group ml-3" style="width: 30%;">
-                <div class="input-group-prepend">
-                    <span class="input-group-text bg-info text-white" id="basic-addon1">
-                        <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;
-                        Service
-                    </span>
-                </div>
-                <input type="text" class="form-control" placeholder="..." formControlName="service">
+            <div class="input-group ml-3" style="width: 25%;">
+                <label for="service" class="form__label">Libéllé du service <span class="text-danger">*</span></label>
+                <input type="text" class="form__input w-100" placeholder="..." formControlName="service">
             </div>
             <button 
-                class="btn btn-success ml-3" 
+                class="bt bt--green ml-3" 
                 matTooltip="Enregistrer" 
                 matTooltipPosition="left"
                 [disabled]="formGroup.invalid"
@@ -85,50 +63,27 @@
     </div>
 
     <div class="my-3 text-center" *ngIf="loadingEdit">
-        <div style="width: max-content;" class="m-auto">
-          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-            <span  class="sr-only">Loading...</span>
-          </div>
-          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
+        <app-loader></app-loader>
     </div>
 
-    <div class="card border-0 mt-3 mat-elevation-z3">
-        <div class="card-header bg-info text-white">
-            <i class="fa fa-cogs text-white" aria-hidden="true"></i>&nbsp;&nbsp;
-            <strong>LISTE DES SERVICES</strong>
+    <div class="mt-3">
+        <div class="bg-dark text-white px-3 py-2" style="font-family: 'Montserrat';">
+            <small>-- &nbsp;&nbsp; LISTE DES SERVICES</small>
         </div>
-        <div class="card-body p-0">
-            <table class="table table-striped">
+        <div>
+            <table>
                 <thead>
                     <tr>
-                        <th>Service</th>
-                        <th>Département</th>
-                        <th>Direction</th>
+                        <th>Service.</th>
+                        <th>Département.</th>
+                        <th>Direction.</th>
                         <th width="150"></th>
                     </tr>
                 </thead>
                 <tbody *ngIf="loading">
                     <tr align="center">
-                        <td colspan="3">
-                            <div class="card-body">
-                                <div style="width: max-content;" class="m-auto">
-                                  <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                                    <span  class="sr-only">Loading...</span>
-                                  </div>
-                                  <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                  </div>
-                                  <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                  </div>
-                                </div>
-                            </div>
+                        <td colspan="4">
+                            <app-loader></app-loader>
                         </td>
                     </tr>
                 </tbody>

@@ -1,70 +1,57 @@
 <div class="animate__animated animate__fadeIn">
-    <div class="card">
-        <div class="card-header">
-            <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;&nbsp;
-            Compte utilisateur
+    <div>
+        <div class="bg--blue text-white px-3 py-2" style="font-family: 'Montserrat';">
+            <small>-- &nbsp;&nbsp; GESTION DES COMPTES UTILISATEURS</small>
         </div>
-        <div class="card-body d-flex justify-content-between">
+        <div class="d-flex py-3 justify-content-between">
             <div class="w-25 px-3">
-                <button class="btn btn-info" (click)="ActivateField()" [disabled]="disableButton">
-                    <i class="fa fa-user-circle" aria-hidden="true"></i>&nbsp;&nbsp;
-                    {{ update ? 'Modifier le compte utilisateur' : 'Nouveau compte utilisateur'}}
+                <button class="bt bt--blue" (click)="ActivateField()" [disabled]="disableButton">
+                    -- {{ update ? 'Modifier le compte utilisateur' : 'Nouveau compte utilisateur'}}
                 </button>
                 <form class="mt-3" [formGroup]="formGroup" (ngSubmit)="onSubmitForm()">
-                    <div class="form-group mb-3">
-                        <label for="" class="form-label">Email <strong class="text-danger">*</strong></label>
-                        <input type="email" class="form-control" formControlName="email">
+                    <div class="form__group mb-3">
+                        <label for="" class="form__label">Email <strong class="text-danger">*</strong></label>
+                        <input type="email" class="form__input" formControlName="email">
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="" class="form-label">Nom d'utilisateur <strong class="text-danger">*</strong></label>
-                        <input type="text" class="form-control" formControlName="login">
+                    <div class="form__group mb-3">
+                        <label for="" class="form__label">Nom d'utilisateur <strong class="text-danger">*</strong></label>
+                        <input type="text" class="form__input" formControlName="login">
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="" class="form-label">Mot de passe</label>
-                        <input type="password" class="form-control" formControlName="mdp">
+                    <div class="form__group mb-3">
+                        <label for="" class="form__label">Mot de passe</label>
+                        <input type="password" class="form__input" formControlName="mdp">
                     </div>
-                    <div class="form-group form-check mb-3">
+                    <div class="form__group form-check mb-3">
                         <input 
                             type="checkbox" 
                             class="form-check-input" 
                             id="exampleCheck1" 
                             formControlName="isAdmin">
-                        <label class="form-check-label" for="exampleCheck1">Administrateur</label>
+                        <label class="form-check-label form__label" for="exampleCheck1">Administrateur</label>
                     </div>
                     <div class="d-flex">
                         <input 
                             type="submit" 
                             [value]="update ? 'Modifier' : 'Enregistrer'" 
-                            class="btn btn-success" 
+                            class="bt bt--green" 
                             [disabled]="formGroup.invalid || !disableButton">
-                        <button class="btn btn-danger ml-3" (click)="onCancel()" [disabled]="!disableButton">
+                        <button class="bt bt--red ml-3" (click)="onCancel()" [disabled]="!disableButton">
                             Annuler
                         </button>
                     </div>                
                 </form>
                 <div class="mt-3 text-center" *ngIf="loadingEdit">
-                    <div style="width: max-content;" class="m-auto">
-                      <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                        <span  class="sr-only">Loading...</span>
-                      </div>
-                      <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                        <span class="sr-only">Loading...</span>
-                      </div>
-                      <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                        <span class="sr-only">Loading...</span>
-                      </div>
-                    </div>
+                    <app-loader></app-loader>
                 </div>
             </div>
 
             <div style="width: 74%;">
-                <div class="card border-0 mat-elevation-z3">
-                    <div class="card-header bg-info text-white">
-                        <i class="fa fa-user-circle text-white" aria-hidden="true"></i>&nbsp;&nbsp;
-                        <strong>LISTE DES COMPTES UTILISATEURS</strong>
+                <div>
+                    <div class="bg-dark text-white px-3 py-2" style="font-family: 'Montserrat';">
+                        <small>-- &nbsp;&nbsp; LISTE DES UTILISATEURS</small>
                     </div>
-                    <div class="card-body p-0">
-                        <table class="table table-striped">
+                    <div>
+                        <table>
                             <thead>
                                 <tr>
                                     <th class="pl-5">Email.</th>
@@ -76,17 +63,7 @@
                                 <tr align="center">
                                     <td colspan="3">
                                         <div class="card-body">
-                                            <div style="width: max-content;" class="m-auto">
-                                              <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                                                <span  class="sr-only">Loading...</span>
-                                              </div>
-                                              <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                                                <span class="sr-only">Loading...</span>
-                                              </div>
-                                              <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                                                <span class="sr-only">Loading...</span>
-                                              </div>
-                                            </div>
+                                            <app-loader></app-loader>
                                         </div>
                                     </td>
                                 </tr>

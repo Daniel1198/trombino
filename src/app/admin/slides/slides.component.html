@@ -1,9 +1,8 @@
-<div class="card">
-    <div class="card-header">
-        <i class="fa fa-images" aria-hidden="true"></i>&nbsp;&nbsp;
-        Gestion des slides
+<div>
+    <div class="bg-dark text-white px-3 py-2" style="font-family: 'Montserrat';">
+        <small>-- &nbsp;&nbsp; GESTION DES SLIDES</small>
     </div>
-    <div class="card-body row">
+    <div class="row">
         <div class="col-4 mb-3" style="height: 200px;" *ngFor="let slide of images; let i = index">
             <img [src]="previewImages[i].length > 0 ? previewImages[i] : slide.lien" alt="slide1" class="img-fluid img-thumbnail w-100 h-100 position-relative">
             <div 
