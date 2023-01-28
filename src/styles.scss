@@ -15,11 +15,95 @@ body {
     background-color: #adadad;
 }
 
-thead {
+$color-primary: #5483aac7;
+$color-input-border: rgba(0, 0, 0, 0.137);
+
+table {
+    margin-top: 5px;
+    width: 100%;
+    font-family: 'Montserrat';
+    font-size: small;
+
+    thead {
+
+        th {
+            font-weight: 300;
+            border: 1px dashed rgba(0, 0, 0, 0.199);
+            padding-left: 10px;
+        }
+    }
+    
+    tbody {
+        font-size: small;
+
+        td {
+            padding-left: 10px;
+        }
+    }
+}
+
+.input__search {
+    border: 1px solid $color-input-border;
+    outline: none;
+    box-sizing: border-box;
+    padding-inline: 15px;
+    padding-block: 7px;
     font-family: 'Inter';
     font-size: small;
 }
 
-tbody {
+.bt {
+    padding-inline: 15px;
+    padding-block: 7px;
+    border: none;
+    border-radius: 2px;
     font-size: small;
+    font-family: 'Inter';
+    outline: none;
+    box-sizing: border-box;
+
+    &.bt--blue {
+        background-color: $color-primary;
+        color: rgba(255, 255, 255, 0.767);
+    }
+
+    &.bt--green {
+        background-color: #54aa5fc7;
+        color: rgba(255, 255, 255, 0.767);
+    }
 }
+
+.txt {
+    font-size: small;
+    font-family: 'Inter';
+
+    &.txt--blue {
+        color: $color-primary;
+    }
+}
+
+.bg--blue {
+    background-color: $color-primary;
+}
+
+.form__label {
+    font-size: small;
+    font-family: 'Inter';
+    font-weight: 700;
+}
+
+.form__input, .form__select {
+    display: block;
+    outline: none;
+    box-sizing: border-box;
+    padding: 5px 15px;
+    border: 1px solid $color-input-border;
+    font-size: small;
+    font-family: 'Inter';
+}
+
+.form__group {
+    margin-inline: 5px;
+}
+
+

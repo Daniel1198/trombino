@@ -13,6 +13,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AjoutPersonnelComponent } from './ajout-personnel/ajout-personnel.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SlidesComponent } from './slides/slides.component';
+import { PanelComponent } from './panel/panel.component';
+import { LoaderModule } from '../loader/loader.module';
 
 
 @NgModule({
@@ -24,7 +26,8 @@ import { SlidesComponent } from './slides/slides.component';
     DepartementComponent,
     DirectionComponent,
     AjoutPersonnelComponent,
-    SlidesComponent
+    SlidesComponent,
+    PanelComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +35,8 @@ import { SlidesComponent } from './slides/slides.component';
     NgxPaginationModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    LoaderModule
   ]
 })
 export class AdminModule { }
