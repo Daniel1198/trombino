@@ -1,12 +1,4 @@
-<div>
-    <div class="w-75 m-auto d-flex align-items-center" id="searchBar">
-        <input type="text" #search (input)="onSearch(search.value)"
-            placeholder="Saisissez votre recherche ici : Nom, Prénoms, Téléphone, Direction, Fonction etc....">
-        <span>
-            <i class="fa fa-search px-3 text-info" aria-hidden="true"></i>
-        </span>
-    </div>
-
+<div class="w3-animate-left">
     <div *ngIf="loading" class="mt-3 text-center">
         <div style="width: max-content;" class="m-auto">
           <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
@@ -23,20 +15,20 @@
     
     <div 
         id="carouselExampleCaptions" 
-        class="carousel slide mt-3" 
+        class="carousel slide" 
         data-interval="5000" 
         data-ride="carousel"
         *ngIf="varAffich == 0">
         <ol class="carousel-indicators">
             <li 
-                *ngFor="let slide of slides; let i = index"
+                *ngFor="let slide of [1,2,3]; let i = index"
                 data-target="#carouselExampleCaptions"
                 [attr.data-slide-to]="i"
             ></li>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item {{ i == 0 ? 'active' : ''}}" *ngFor="let slide of slides; let i = index">
-                <img [src]="slide.lien" class="d-block w-100" style="height: 80vh;">
+            <div class="carousel-item {{ i == 0 ? 'active' : ''}}" *ngFor="let slide of [1,2,3]; let i = index">
+                <img src="assets/images/imgx1.jpg" class="d-block w-100" style="height: 400px;">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-target="#carouselExampleCaptions" data-slide="prev">
@@ -48,7 +40,7 @@
             <span class="sr-only">Next</span>
         </button>
     </div>
-
+    {{ search }}
     <!-- En cas de résulat nul -->
     <div 
         *ngIf="nbrEnr == 0 && !loading"

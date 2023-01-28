@@ -1,5 +1,9 @@
+@mixin backgroundHover() {
+    background-color: rgba(0, 0, 0, 0.068);
+}
+
 a {
-    font-family: 'Montserrat';
+    font-family: 'Inter';
     font-size: small;
     text-decoration: none;
     color: #1c344ed3;
@@ -10,18 +14,24 @@ a {
     transition: 0.1s;
 
     &:hover {
-        color: #1b4e85;
-        background-color: rgba(0, 0, 0, 0.068);
-        border-top: 3px solid #1b4e85;
+        @include backgroundHover;
     }
 
-    &.current {
-        color: #1b4e85;
-        background-color: rgba(0, 0, 0, 0.068);
-        border-top: 3px solid #1b4e85;
+    &.link.current {
+        @include backgroundHover;
     }
 }
 
 h5 {
     color: #2c5989d3;
+}
+
+input[type="search"] {
+    border: 1px solid rgba(0, 0, 0, 0.123);
+    outline: none;
+    box-sizing: border-box;
+    padding-block: 10px;
+    padding-inline: 15px;
+    font-family: 'Inter';
+    font-size: small;
 }

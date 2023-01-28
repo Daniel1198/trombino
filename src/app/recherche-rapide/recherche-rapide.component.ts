@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { DetailsPersonnelDialogComponent } from '../components/details-personnel-dialog/details-personnel-dialog.component';
 import { PersonnelService } from '../services/personnel.service';
@@ -17,6 +18,7 @@ export class RechercheRapideComponent implements OnInit {
   nbrEnr: any;
   varAffich = 0;
   slides: any = [];
+  search!: string;
 
   constructor(
     public dialog: MatDialog,
