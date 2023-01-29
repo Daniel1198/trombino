@@ -5,6 +5,10 @@
 body {
     font-family: 'Montserrat';
     font-size: small;
+    background: linear-gradient(rgba(255, 255, 255, 0.89), rgba(255, 255, 255, 0.89)), url('assets/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 ::-webkit-scrollbar {
@@ -50,6 +54,7 @@ table {
     padding-block: 7px;
     font-family: 'Inter';
     font-size: small;
+    background-color: transparent;
 }
 
 .bt {
@@ -91,6 +96,10 @@ table {
     background-color: $color-primary;
 }
 
+.bg--red {
+    background-color: rgba(204, 40, 40, 0.589);
+}
+
 .form__label {
     font-size: small;
     font-family: 'Inter';
@@ -105,10 +114,49 @@ table {
     border: 1px solid $color-input-border;
     font-size: small;
     font-family: 'Inter';
+    background-color: transparent;
 }
 
 .form__group {
     margin-inline: 5px;
 }
+
+.card-profile {
+    font-family: 'Inter';
+    font-size: small;
+    height: 430px;
+    width: 250px;
+    padding-inline: 10px;
+    background-image: url('assets/images/backCard.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    
+    .user-profile {
+        width: 100px;
+        height: 120px;
+    }
+
+    .card-title {
+        font-family: 'Inter';
+        font-size: small;
+    }
+}
+
+.rounded--bottom {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.text-overflow {
+    text-overflow: ellipsis; 
+    overflow: hidden; 
+    -o-text-overflow : ellipsis; 
+    display: -webkit-box;    
+    -webkit-line-clamp: 2;  
+    -webkit-box-orient: vertical;
+}
+
+
 
 

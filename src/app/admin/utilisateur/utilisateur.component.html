@@ -29,13 +29,13 @@
                             formControlName="isAdmin">
                         <label class="form-check-label form__label" for="exampleCheck1">Administrateur</label>
                     </div>
-                    <div class="d-flex">
+                    <div class="d-flex px-3">
                         <input 
                             type="submit" 
                             [value]="update ? 'Modifier' : 'Enregistrer'" 
-                            class="bt bt--green" 
+                            class="bt bt--green w-auto" 
                             [disabled]="formGroup.invalid || !disableButton">
-                        <button class="bt bt--red ml-3" (click)="onCancel()" [disabled]="!disableButton">
+                        <button class="bt bt--red ml-3 w-auto" (click)="onCancel()" [disabled]="!disableButton">
                             Annuler
                         </button>
                     </div>                

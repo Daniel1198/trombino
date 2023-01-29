@@ -1,64 +1,49 @@
-<a routerLink="/admin/listepersonnel" class="btn btn-sm">
-    <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;
-    Retour
-</a>
-<div class="mt-3 animate__animated animate__fadeIn">
-    <div class="card">
-        <div class="card-header">
-            <strong>{{ id === 0 ? 'Ajout d\'un nouvel employé' : 'Modifier des informations sur l\'employé' }}</strong>
+<div class="animate__animated animate__fadeIn">
+    <div>
+        <div class="bg-dark d-flex justify-content-between align-items-center text-white px-3 py-2" style="font-family: 'Montserrat';">
+            <small>-- &nbsp;&nbsp; {{ id === 0 ? 'Ajout d\'un nouvel employé' : 'Modifier des informations sur l\'employé' }}</small>
+            <a routerLink="/admin/listepersonnel" class="btn btn-sm txt txt--blue">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;
+                Retour
+            </a>
         </div>
-        <div class="card-body">
+        <div class="py-3">
             <div class="row">
                 <form
                     [formGroup]="formGroup"
                     (ngSubmit)="onSubmitForm()" 
                     class="col-9">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-info text-white" id="basic-addon1">
-                                <i class="fa fa-users-gear" aria-hidden="true"></i>&nbsp;
-                                Direction<strong><span class="text-danger">*</span></strong>
-                            </span>
-                        </div>
+                    <div class="form__group mb-3">
+                        <label for="" class="form__label">Direction <strong><span class="text-danger">*</span></strong></label>
                         <select 
                             formControlName="direction"
                             #idDirection
                             (change)="getDirectionDepartements(idDirection.value)"
-                            class="form-control">
+                            class="form__select w-100">
                             <option value="">-- Choisir --</option>
                             <option 
                                 *ngFor="let direction of directions"
                                 [value]="direction.Id_direction">{{ direction.LibelleDirection }}</option>
                         </select>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-info text-white" id="basic-addon1">
-                                <i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;
-                                Département<strong><span class="text-danger">*</span></strong>
-                            </span>
-                        </div>
+                    <div class="form__group mb-3">
+                        <label for="" class="form__label">Département <strong><span class="text-danger">*</span></strong></label>
                         <select
                             formControlName="departement"
                             #idDepartement
                             (change)="getDepartementServices(idDepartement.value)"
-                            class="form-control">
+                            class="form__select w-100">
                             <option value="">-- Choisir --</option>
                             <option 
                                 *ngFor="let departement of departements"
                                 [value]="departement.Id">{{ departement.LibelleDepartement }}</option>
                         </select>
                     </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-info text-white" id="basic-addon1">
-                                <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;
-                                Service<strong><span class="text-danger">*</span></strong>
-                            </span>
-                        </div>
+                    <div class="form__group mb-3">
+                        <label for="" class="form__label">Service <strong><span class="text-danger">*</span></strong></label>
                         <select
                             formControlName="service"
-                            class="form-control"
+                            class="form__select w-100"
                             #serviceId
                             (change)="getServiceLibelle(serviceId.value)"
                             >
@@ -70,159 +55,135 @@
                     </div>
 
                     <div class="d-flex">
-                        <div class="form-group mr-3">
-                            <label for="" class="form-label">Matricule<strong><span class="text-danger">*</span></strong></label>
-                            <input type="text" class="form-control" formControlName="matricule">
+                        <div class="form__group mr-3 mb-3">
+                            <label for="" class="form__label">Matricule<strong><span class="text-danger">*</span></strong></label>
+                            <input type="text" class="form__input" formControlName="matricule">
                         </div>
-                        <div class="form-group mr-3">
-                            <label for="" class="form-label">Nom<strong><span class="text-danger">*</span></strong></label>
-                            <input type="text" class="form-control" formControlName="nom">
+                        <div class="form__group mr-3 mb-3">
+                            <label for="" class="form__label">Nom<strong><span class="text-danger">*</span></strong></label>
+                            <input type="text" class="form__input" formControlName="nom">
                         </div>
-                        <div class="form-group w-50">
-                            <label for="" class="form-label">Prénom(s)<strong><span class="text-danger">*</span></strong></label>
-                            <input type="text" class="form-control" formControlName="prenom">
+                        <div class="form__group w-50 mb-3">
+                            <label for="" class="form__label">Prénom(s)<strong><span class="text-danger">*</span></strong></label>
+                            <input type="text" class="form__input w-100" formControlName="prenom">
                         </div>
                     </div>
 
                     <div class="d-flex">
-                        <div class="form-group mr-3">
-                            <label for="" class="form-label">Sexe<strong><span class="text-danger">*</span></strong></label>
+                        <div class="form__group mr-3 mb-3">
+                            <label for="" class="form__label">Sexe<strong><span class="text-danger">*</span></strong></label>
                             <select
                                 formControlName="sexe"
-                                class="form-control">
+                                class="form__select">
                                 <option value="">-- Sélectionnez le sexe --</option>
                                 <option value="M">Masculin</option>
                                 <option value="F">Féminin</option>
                             </select>
                         </div>
-                        <div class="form-group w-75">
-                            <label for="" class="form-label">Fonction<strong><span class="text-danger">*</span></strong></label>
-                            <input type="text" class="form-control" formControlName="fonction">
+                        <div class="form__group w-75 mb-3">
+                            <label for="" class="form__label">Fonction<strong><span class="text-danger">*</span></strong></label>
+                            <input type="text" class="form__input w-100" formControlName="fonction">
                         </div>
                     </div>
 
                     <div class="d-flex">
-                        <div class="form-group mr-3">
-                            <label for="" class="form-label">Mobile<strong><span class="text-danger">*</span></strong></label>
-                            <input type="text" class="form-control" formControlName="mobile">
+                        <div class="form__group mr-3 mb-3">
+                            <label for="" class="form__label">Mobile<strong><span class="text-danger">*</span></strong></label>
+                            <input type="text" class="form__input" formControlName="mobile">
                         </div>
-                        <div class="form-group mr-3">
-                            <label for="" class="form-label">Fax</label>
-                            <input type="text" class="form-control" formControlName="fax">
+                        <div class="form__group mr-3 mb-3">
+                            <label for="" class="form__label">Fax</label>
+                            <input type="text" class="form__input" formControlName="fax">
                         </div>
-                        <div class="form-group w-50">
-                            <label for="" class="form-label">Email</label>
-                            <input type="email" class="form-control" formControlName="email">
+                        <div class="form__group w-50 mb-3">
+                            <label for="" class="form__label">Email</label>
+                            <input type="email" class="form__input w-100" formControlName="email">
                         </div>
                     </div>
 
                     <div class="d-flex">
-                        <div class="form-group mr-3">
-                            <label for="" class="form-label">Bâtiment</label>
-                            <input type="text" class="form-control" formControlName="batiment">
+                        <div class="form__group mr-3 mb-3">
+                            <label for="" class="form__label">Bâtiment</label>
+                            <input type="text" class="form__input" formControlName="batiment">
                         </div>
-                        <div class="form-group mr-3">
-                            <label for="" class="form-label">Porte</label>
-                            <input type="text" class="form-control" formControlName="porte">
+                        <div class="form__group mr-3 mb-3">
+                            <label for="" class="form__label">Porte</label>
+                            <input type="text" class="form__input" formControlName="porte">
                         </div>
-                        <div class="form-group mr-3">
-                            <label for="" class="form-label">Poste</label>
-                            <input type="text" class="form-control" formControlName="poste">
-                        </div>
-                        <div class="form-group">
-                            <label for="" class="form-label">Photo de profile</label>
-                            <input 
-                                type="file" 
-                                class="form-control"  
-                                (change)="onFileChange($event)" 
-                                multiple="false"
-                                accept="image/png, image/jpeg"
-                            >
+                        <div class="form__group mb-3 w-50">
+                            <label for="" class="form__label">Poste</label>
+                            <input type="text" class="form__input w-100" formControlName="poste">
                         </div>
                     </div>
 
                     <div class="float-right mt-3">
-                        <a routerLink="/admin/listepersonnel" class="btn btn-danger mr-3">
+                        <button routerLink="/admin/listepersonnel" class="bt bt--red mr-3">
                             <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;&nbsp;
                             Retour
-                        </a>
-                        <button type="submit" class="btn btn-success" [disabled]="formGroup.invalid">
+                        </button>
+                        <button type="submit" class="bt bt--green" [disabled]="formGroup.invalid">
                             <i class="fa fa-database" aria-hidden="true"></i>&nbsp;&nbsp;
                             {{ id === 0 ? 'Enregistrer': 'Modifier'}}
                         </button>
                     </div>
                 </form>
                 <div class="col-3">
-                    <div class="card-profile card mat-elevation-z3 text-white p-2" style="border-radius: 20px;">
-                        <p class="py-1 rounded-pill w-50 border text-center text-info">
+                    <div class="card-profile w3-border">
+                        <p class="py-1 w-50 text-center txt bg--red m-auto text-white rounded--bottom">
                             <strong>{{ formGroup.get('matricule')?.value }}</strong>
                         </p>
-                        <div class="m-auto rounded-circle d-flex align-items-center justify-content-center"
-                            id="imageContainer">
-                            <div id="user-profile" class="rounded-circle shadow">
-                                <img [src]="previewImage" alt="Photo de profile" class="img-fluid w-100 h-100 rounded-circle">
-                            </div>
+                        <div class="mt-3"></div>
+                        <div class="user-profile m-auto">
+                            <img [src]="previewImage" alt="Photo de profile" class="img-thumbnail w-100 h-100">
                         </div>
-                        <div class="card-body">
+                        <div class="p-3">
                             <div class="d-flex justify-content-center">
-                                <h5 class="card-title text-center text-danger" style="font-family: 'Ubuntu';">
-                                    {{ formGroup.get('nom')?.value }} {{ formGroup.get('prenom')?.value }}
+                                <h5 class="card-title text-center mb-0">
+                                    <strong>{{ formGroup.get('nom')?.value | uppercase }}</strong> {{ formGroup.get('prenom')?.value | uppercase }}
                                 </h5>
-                                &nbsp;&nbsp;
                             </div>
-                            <p class="text-center text-dark mb-1 mt-0" style="font-size: small;">
-                                {{ formGroup.get('fonction')?.value }}
+                            <p class="text-center text-danger mb-3 mt-0 text-overflow" style="font-size: x-small;">
+                                <strong>{{ formGroup.get('fonction')?.value | titlecase }}</strong>
                             </p>
-                            <p class="text-center bg-danger text-white p-1 mb-1" style="font-size: x-small;">
-                                {{ service }}</p>
-                            <p class="text-center bg-success text-white p-1 mb-1" style="font-size: x-small;">
-                                <i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;
-                                {{ formGroup.get('mobile')?.value }}
-                            </p>
-                            <p class="text-center bg-info text-white p-1" style="font-size: x-small;">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>&nbsp;&nbsp;
-                                {{ formGroup.get('email')?.value }}
-                            </p>
-                            <hr>
-                            <div style="width: 30px;" class="m-auto">
-                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 17.026 17.026"
-                                    style="enable-background:new 0 0 17.026 17.026;" xml:space="preserve">
-                                    <g>
-                                        <g>
-                                            <path style="fill:#030104;" d="M6.719,0h-1.05C5.114,0,4.664,0.45,4.664,1.005v12.622c0,0.548,0.439,0.993,0.985,1.004
-                                                c-0.172,0.875-0.945,1.538-1.869,1.538c-1.051,0-1.907-0.857-1.907-1.907V9.45c0-0.238-0.192-0.43-0.429-0.43
-                                                s-0.43,0.191-0.43,0.43v4.812c0,1.524,1.241,2.764,2.766,2.764c1.397,0,2.554-1.044,2.737-2.393H6.72
-                                                c0.555,0,1.006-0.451,1.006-1.006V1.006C7.725,0.451,7.274,0,6.719,0z" />
-                                            <path style="fill:#030104;"
-                                                d="M15.159,1.595h-7.01V13.89h7.01c0.472,0,0.853-0.381,0.853-0.852V2.447
-                                                C16.012,1.976,15.631,1.595,15.159,1.595z M10.812,12.631h-1.49v-1.489h1.49V12.631z M10.812,10.556h-1.49v-1.49h1.49V10.556z
-                                                M10.823,8.495h-1.49v-1.49h1.49V8.495z M12.942,12.631h-1.491v-1.489h1.491V12.631z M12.942,10.556h-1.491v-1.49h1.491V10.556z
-                                                M12.952,8.495h-1.491v-1.49h1.491V8.495z M15.071,12.631h-1.49v-1.489h1.49V12.631z M15.071,10.556h-1.49v-1.49h1.49V10.556z
-                                                M15.082,8.495h-1.491v-1.49h1.491V8.495z M15.088,4.085H9.073V2.328h6.015V4.085z" />
-                                            <path style="fill:#030104;" d="M3.696,13.89h0.521V1.595H3.696c-0.47,0-0.852,0.382-0.852,0.852v10.592
-                                                C2.844,13.509,3.226,13.89,3.696,13.89z" />
-                                        </g>
-                                    </g>
-                                </svg>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger p-1" style="width: 30px; height: 30px;">
+                                    <i class="fa fa-mobile-alt text-white" aria-hidden="true"></i>
+                                </div>
+                                <div class="ml-2">
+                                    {{ formGroup.get('mobile')?.value }}
+                                </div>
                             </div>
-                            <p class="text-danger text-center">
-                                <strong>{{ formGroup.get('poste')?.value }}</strong>
-                            </p>
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger p-1" style="width: 30px; height: 30px;">
+                                    <i class="fa fa-envelope text-white" aria-hidden="true"></i>
+                                </div>
+                                <div class="ml-2 txt txt--blue">
+                                    {{ formGroup.get('email')?.value }}
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger p-1" style="width: 30px; height: 30px;">
+                                    <i class="fa fa-phone text-white" aria-hidden="true"></i>
+                                </div>
+                                <div class="ml-2 form__label">
+                                    {{ formGroup.get('poste')?.value }}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div *ngIf="loading" class="mt-3 text-center">
-                        <div style="width: max-content;" class="m-auto">
-                            <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                                <span  class="sr-only">Loading...</span>
-                            </div>
-                            <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                        </div>
+                    <div class="form__group mt-3 w-100 text-center">
+                        <label for="file" class="bt bt--blue">Photo de profile</label>
+                        <input 
+                            type="file"
+                            id="file" 
+                            class="form__input"  
+                            (change)="onFileChange($event)" 
+                            multiple="false"
+                            accept="image/png, image/jpeg"
+                        >
+                    </div>
+                    <div *ngIf="loading" class="text-center">
+                        <app-loader></app-loader>
                     </div>
                 </div>
             </div>

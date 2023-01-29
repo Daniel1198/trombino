@@ -19,6 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { ToastrModule } from 'ngx-toastr';
+import { LoaderModule } from './loader/loader.module';
 
 const materialModule = [
   MatSidenavModule,
@@ -46,6 +47,7 @@ const materialModule = [
     materialModule,
     HttpClientModule,
     FormsModule,
+    LoaderModule,
     ToastrModule.forRoot()
   ],
   providers: [
