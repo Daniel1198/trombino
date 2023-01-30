@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-panel',
@@ -16,8 +17,17 @@ export class PanelComponent implements OnInit {
   }
 
   onLogout() {
-    this.authService.logoutUser();
-    location.reload();
+    Swal.fire({
+      title: 'Vous allez être déconnecté ? Le confirmez-vous ?',
+      showDenyButton: true,
+      confirmButtonText: 'Oui',
+      denyButtonText: `Non`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.logoutUser();
+        location.reload();
+      }
+    })
   }
 
 }
