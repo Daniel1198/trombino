@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { DepartementService } from 'src/app/services/departement.service';
 import { DirectionService } from 'src/app/services/direction.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-departement',
@@ -23,12 +22,23 @@ export class DepartementComponent implements OnInit {
   update: boolean = false;
   loading: boolean = false;
   loadingEdit: boolean = false;
+
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
   
   constructor(
     private directionService: DirectionService,
     private departementService: DepartementService,
-    private builder: FormBuilder,
-    private toastr: ToastrService
+    private builder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -46,7 +56,6 @@ export class DepartementComponent implements OnInit {
   }
 
   onSubmitForm() {
-    this.loadingEdit = true;
     const formData = new FormData();
 
     formData.append('Id', this.formGroup.get('id')?.value);
@@ -54,38 +63,57 @@ export class DepartementComponent implements OnInit {
     formData.append('DirectionId', this.formGroup.get('direction')?.value);
 
     if (!this.update) {
+      this.loadingEdit = true;
       this.departementService.creatDepartement(formData).subscribe(
         result => {
           this.loadingEdit = false;
           if (result.success) {
-            this.toastr.success(result.message);
+            this.Toast.fire({
+              icon: 'success',
+              title: result.message
+            })
             this.formGroup.reset();
             this.getAllDepartement();
           }
           else {
-            this.toastr.error(result.message);
+            this.Toast.fire({
+              icon: 'error',
+              title: result.message
+            })
           }
         }
       );
     }
     else {
-      const confirmUpdating = confirm("Voulez-vous vraiment enregistrer les modifications apportées ?");
-      if (confirmUpdating) {
-        this.loadingEdit = true;
-        this.departementService.updateDepartement(formData).subscribe(
-          result => {
-            this.loadingEdit = false;
-            if (result.success) {
-              this.toastr.success(result.message);
-              this.getAllDepartement();
+      Swal.fire({
+        title: 'Voulez-vous vraiment enregistrer les modifications apportées ?',
+        showDenyButton: true,
+        confirmButtonText: 'Oui',
+        denyButtonText: `Non`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.loadingEdit = true;
+          this.departementService.updateDepartement(formData).subscribe(
+            result => {
+              this.loadingEdit = false;
+              if (result.success) {
+                this.Toast.fire({
+                  icon: 'success',
+                  title: result.message
+                })
+                this.getAllDepartement();
+              }
+              else {
+                this.Toast.fire({
+                  icon: 'error',
+                  title: result.message
+                })
+              }
             }
-            else {
-              this.toastr.error(result.message);
-            }
-          }
-        );
-        this.onCancel();
-      }
+          );
+          this.onCancel();
+        }
+      })
     }
   }
 
@@ -110,22 +138,34 @@ export class DepartementComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    const confirmDeleting = confirm("Voulez-vous vraiment supprimer ce département ?");
-    if (confirmDeleting) {
-      this.loadingEdit = true;
-      this.departementService.deleteDepartement(id).subscribe(
-        result => {
-          this.loadingEdit = false;
-          if (result.success) {
-            this.toastr.success(result.message);
-            this.getAllDepartement();
+    Swal.fire({
+      title: 'Voulez-vous vraiment supprimer ce département ?',
+      showDenyButton: true,
+      confirmButtonText: 'Oui',
+      denyButtonText: `Non`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loadingEdit = true;
+        this.departementService.deleteDepartement(id).subscribe(
+          result => {
+            this.loadingEdit = false;
+            if (result.success) {
+              this.Toast.fire({
+                icon: 'success',
+                title: result.message
+              })
+              this.getAllDepartement();
+            }
+            else {
+              this.Toast.fire({
+                icon: 'error',
+                title: result.message
+              })
+            }
           }
-          else {
-            this.toastr.error(result.message);
-          }
-        }
-      );
-    }
+        );
+      }
+    })
   }
 
   getAllDepartement() {

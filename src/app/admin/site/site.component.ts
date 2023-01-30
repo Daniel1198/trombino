@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { debounceTime } from 'rxjs';
 import { SiteService } from 'src/app/services/site.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-site',
@@ -23,11 +21,21 @@ export class SiteComponent implements OnInit {
   loading: boolean = false;
   loadingEdit: boolean = false;
 
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
   constructor(
     private builder: FormBuilder,
-    private siteService: SiteService,
-    private route: ActivatedRoute,
-    private toastr: ToastrService
+    private siteService: SiteService
   ) { }
 
   ngOnInit(): void {
@@ -43,45 +51,65 @@ export class SiteComponent implements OnInit {
   }
 
   onSubmitForm() {
-    this.loadingEdit = true;
     const siteFormData = new FormData();
     
     siteFormData.append('Id', this.formGroup.get('siteid')?.value)
     siteFormData.append('LibelleSite', this.formGroup.get('libellesite')?.value)
         
     if (!this.update) {
+      this.loadingEdit = true;
       this.siteService.creatSite(siteFormData).subscribe(
         result => {
           this.loadingEdit = false;
           if (result.success) {
-            this.toastr.success(result.message);
+            this.Toast.fire({
+              icon: 'success',
+              title: result.message
+            })
             this.formGroup.reset();
             this.getAllSite();
           }
           else {
-            this.toastr.error(result.message);
+            this.Toast.fire({
+              icon: 'error',
+              title: result.message
+            })
           }
         }
       )
     }
     else {
-      const confirmUpdating = confirm("Voulez-vous enregistrer les modifications apportées ?");
-      if (confirmUpdating) {
-        this.loadingEdit = true;
-        this.siteService.updateSite(siteFormData).subscribe(
-          result => {
-            this.loadingEdit = false;
-            if (result.success) {
-              this.toastr.success(result.message);
-              this.getAllSite();
-              this.onCancel();
+      Swal.fire({
+        title: 'Voulez-vous enregistrer les modifications apportées ?',
+        showDenyButton: true,
+        confirmButtonText: 'Oui',
+        denyButtonText: `Non`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          this.loadingEdit = true;
+          this.siteService.updateSite(siteFormData).subscribe(
+            result => {
+              this.loadingEdit = false;
+              if (result.success) {
+                this.Toast.fire({
+                  icon: 'success',
+                  title: result.message
+                })
+                this.getAllSite();
+                this.onCancel();
+              }
+              else {
+                this.Toast.fire({
+                  icon: 'error',
+                  title: result.message
+                })
+              }
             }
-            else {
-              this.toastr.error(result.message);
-            }
-          }
-        )
-      }
+          )
+          this.onCancel();
+        }
+      })
     }
   }
 
@@ -116,23 +144,38 @@ export class SiteComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    const confirmDeleting = confirm("Voulez-vous vraiment supprimer ce site ?");
-    if (confirmDeleting) {
-      this.loadingEdit = true;
-      this.siteService.deleteSite(id).subscribe(
-        result => {
-          this.loadingEdit = false;
-          if (result.success) {
-            this.toastr.success(result.message);
-            this.formGroup.reset();
-            this.getAllSite();
+
+    Swal.fire({
+      title: 'Voulez-vous vraiment supprimer ce site ?',
+      showDenyButton: true,
+      confirmButtonText: 'Oui',
+      denyButtonText: `Non`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.loadingEdit = true;
+        this.siteService.deleteSite(id).subscribe(
+          result => {
+            this.loadingEdit = false;
+            if (result.success) {
+              this.Toast.fire({
+                icon: 'success',
+                title: result.message
+              })
+              this.formGroup.reset();
+              this.getAllSite();
+              this.page = 1;
+            }
+            else {
+              this.Toast.fire({
+                icon: 'error',
+                title: result.message
+              })
+            }
           }
-          else {
-            this.toastr.error(result.message);
-          }
-        }
-      )
-    }
+        )
+      }
+    })
   }
 
   getAllSite() {

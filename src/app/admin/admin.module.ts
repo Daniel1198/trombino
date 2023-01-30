@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SlidesComponent } from './slides/slides.component';
 import { PanelComponent } from './panel/panel.component';
 import { LoaderModule } from '../loader/loader.module';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { LoaderModule } from '../loader/loader.module';
     MatTooltipModule,
     ReactiveFormsModule,
     FormsModule,
-    LoaderModule
+    LoaderModule,
+    SweetAlert2Module
   ]
 })
 export class AdminModule { }

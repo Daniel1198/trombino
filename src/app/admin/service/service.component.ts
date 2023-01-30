@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { DepartementService } from 'src/app/services/departement.service';
 import { DirectionService } from 'src/app/services/direction.service';
 import { ServiceficService } from 'src/app/services/servicefic.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-service',
@@ -25,13 +24,24 @@ export class ServiceComponent implements OnInit {
   update: boolean = false;
   loading: boolean = false;
   loadingEdit: boolean = false;
+
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
   
   constructor(
     private serviceficService: ServiceficService,
     private departementService: DepartementService,
     private directionService: DirectionService,
-    private builder: FormBuilder,
-    private toastr: ToastrService
+    private builder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -50,7 +60,6 @@ export class ServiceComponent implements OnInit {
   }
 
   onSubmitForm() {
-    this.loadingEdit = true;
     const formData = new FormData();
 
     formData.append('ServId', this.formGroup.get('id')?.value);
@@ -59,38 +68,57 @@ export class ServiceComponent implements OnInit {
     formData.append('LibelleService', this.formGroup.get('service')?.value);
 
     if (!this.update) {
+      this.loadingEdit = true;
       this.serviceficService.creatService(formData).subscribe(
         result => {
           this.loadingEdit = false;
           if (result.success) {
-            this.toastr.success(result.message);
+            this.Toast.fire({
+              icon: 'success',
+              title: result.message
+            })
             this.formGroup.reset();
             this.getAllServices();
           }
           else {
-            this.toastr.error(result.message);
+            this.Toast.fire({
+              icon: 'error',
+              title: result.message
+            })
           }
         }
       );
     }
     else {
-      const confirmUpdating = confirm("Voulez-vous vraiment enregistrer les modifications apportées ?");
-      if (confirmUpdating) {
-        this.loadingEdit = true;
-        this.serviceficService.updateService(formData).subscribe(
-          result => {
-            this.loadingEdit = false;
-            if (result.success) {
-              this.toastr.success(result.message);
-              this.getAllServices();
+      Swal.fire({
+        title: 'Voulez-vous vraiment enregistrer les modifications apportées ?',
+        showDenyButton: true,
+        confirmButtonText: 'Oui',
+        denyButtonText: `Non`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.loadingEdit = true;
+          this.serviceficService.updateService(formData).subscribe(
+            result => {
+              this.loadingEdit = false;
+              if (result.success) {
+                this.Toast.fire({
+                  icon: 'success',
+                  title: result.message
+                })
+                this.getAllServices();
+              }
+              else {
+                this.Toast.fire({
+                  icon: 'error',
+                  title: result.message
+                })
+              }
             }
-            else {
-              this.toastr.error(result.message);
-            }
-          }
-        )
-        this.onCancel();
-      }
+          )
+          this.onCancel();
+        }
+      })
     }
   }
 
@@ -116,22 +144,34 @@ export class ServiceComponent implements OnInit {
   }
 
   onDelete(id: any) {  
-    const confirmDeleting = confirm('Voulez-vous vraiment supprimer ce service ?');
-    if (confirmDeleting) {
-      this.loadingEdit = true;
-      this.serviceficService.deleteService(id).subscribe(
-        result => {
-          this.loadingEdit = false;
-          if (result.success) {
-            this.toastr.success(result.message);
-            this.getAllServices();
+    Swal.fire({
+      title: 'Voulez-vous vraiment supprimer ce service ?',
+      showDenyButton: true,
+      confirmButtonText: 'Oui',
+      denyButtonText: `Non`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.loadingEdit = true;
+        this.serviceficService.deleteService(id).subscribe(
+          result => {
+            this.loadingEdit = false;
+            if (result.success) {
+              this.Toast.fire({
+                icon: 'success',
+                title: result.message
+              })
+              this.getAllServices();
+            }
+            else {
+              this.Toast.fire({
+                icon: 'error',
+                title: result.message
+              })
+            }
           }
-          else {
-            this.toastr.error(result.message);
-          }
-        }
-      )
-    }
+        )
+      }
+    })
   }
 
   getAllServices() {

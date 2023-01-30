@@ -5,6 +5,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoaderModule } from '../loader/loader.module';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { LoaderModule } from '../loader/loader.module';
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule,
-    LoaderModule
+    LoaderModule,
+    SweetAlert2Module
   ]
 })
 export class AuthModule { }

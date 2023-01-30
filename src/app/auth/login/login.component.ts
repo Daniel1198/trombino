@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,19 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   signForm!: FormGroup;
-  erreur: boolean = false;
-  errMsg: string = '';
   loading: boolean = false;
+
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
 
   constructor(
     private builder: FormBuilder,
@@ -42,14 +53,15 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(formData)
       .subscribe(
         res => {
+          this.loading = false;
           if (res.success) {
-            this.loading = false;
             this.route.navigate(['/admin']);
           }
           else {
-            this.loading = false;
-            this.erreur = true;
-            this.errMsg = res.message;
+            this.Toast.fire({
+              icon: 'error',
+              title: res.message
+            })
           }
         }
       );

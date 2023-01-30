@@ -18,7 +18,6 @@ import { DetailsPersonnelDialogComponent } from './components/details-personnel-
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
-import { ToastrModule } from 'ngx-toastr';
 import { LoaderModule } from './loader/loader.module';
 
 const materialModule = [
@@ -47,8 +46,7 @@ const materialModule = [
     materialModule,
     HttpClientModule,
     FormsModule,
-    LoaderModule,
-    ToastrModule.forRoot()
+    LoaderModule
   ],
   providers: [
     { provide: DIALOG_DATA, useValue: {} }
