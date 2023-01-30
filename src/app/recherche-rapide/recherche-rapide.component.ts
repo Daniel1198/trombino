@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { DetailsPersonnelDialogComponent } from '../components/details-personnel-dialog/details-personnel-dialog.component';
 import { PersonnelService } from '../services/personnel.service';
@@ -23,11 +23,18 @@ export class RechercheRapideComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private personnelService: PersonnelService,
-    private slideService: SlideService
+    private slideService: SlideService,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
     this.getSlides();
+    this.store.select((state: any) => state.root.search).subscribe(
+      response => {
+        this.search = response
+        this.onSearch()
+      }
+    )
   }
 
   getSlides() {
@@ -38,15 +45,15 @@ export class RechercheRapideComponent implements OnInit {
     );
   }
 
-  onSearch(search: string) {
-    if (!search) {
+  onSearch() {
+    if (!this.search) {
       this.varAffich = 0;
     } else {
       this.varAffich = 1;
       this.loading = true;
     }
     
-    this.personnelService.recherchepersonnelmulticritere(search.trim()).pipe(
+    this.personnelService.recherchepersonnelmulticritere(this.search.trim()).pipe(
       debounceTime(1000),
       distinctUntilChanged()
     ).subscribe(pers => {

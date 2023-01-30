@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { AuthService } from '../services/auth.service';
+import { changeSearchValue } from '../store/action';
 
 @Component({
   selector: 'app-page-principale',
@@ -13,7 +15,8 @@ export class PagePrincipaleComponent implements OnInit {
   isFadeOut: boolean = false;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -29,6 +32,11 @@ export class PagePrincipaleComponent implements OnInit {
     else {
       this.isFastSearch = isFastSearch;
       this.isFadeOut = false;
+      this.store.dispatch(changeSearchValue({ search: '' }));
     }
+  }
+
+  onSearch(search: string) {
+    this.store.dispatch(changeSearchValue({ search: search }));
   }
 }

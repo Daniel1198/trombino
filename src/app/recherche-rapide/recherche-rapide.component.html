@@ -30,7 +30,6 @@
             <span class="sr-only">Next</span>
         </button>
     </div>
-    {{ search }}
     <!-- En cas de résulat nul -->
     <div 
         *ngIf="nbrEnr == 0 && !loading"
@@ -40,8 +39,8 @@
     </div>
 
     <!-- Si résulat trouvé -->
-    <div class="container py-5 mt-3 w3-animate-bottom" *ngIf="varAffich == 1 && !loading && nbrEnr > 0">
-        <div class="text-success txt">
+    <div class="container py-3 w3-animate-bottom" *ngIf="varAffich == 1 && !loading && nbrEnr > 0">
+        <div class="text-success txt mb-3">
             <strong>{{ nbrEnr }} Résultat(s) trouvé(s) pour la recherche</strong>
         </div>
         <div class="p-3 row">

@@ -8,7 +8,7 @@
         style="width: 35%;"
         class="{{ isFadeOut ? 'animate__animated animate__fadeOutLeft' : 'w3-animate-left' }}" 
         *ngIf="isFastSearch">
-            <input type="search" class="w-100" placeholder="Tapez votre recherche..." #search>
+            <input type="search" class="w-100" placeholder="Tapez votre recherche..." #search (input)="onSearch(search.value)">
         </div>
         <div class="d-flex align-items-center">
             <div class="d-flex">

@@ -19,6 +19,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { LoaderModule } from './loader/loader.module';
+import { StoreModule } from '@ngrx/store';
+import { rootReducer } from './store/reducer';
 
 const materialModule = [
   MatSidenavModule,
@@ -46,7 +48,10 @@ const materialModule = [
     materialModule,
     HttpClientModule,
     FormsModule,
-    LoaderModule
+    LoaderModule,
+    StoreModule.forRoot({
+      root: rootReducer
+    })
   ],
   providers: [
     { provide: DIALOG_DATA, useValue: {} }
