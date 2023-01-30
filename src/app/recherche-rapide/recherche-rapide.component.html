@@ -11,14 +11,14 @@
         *ngIf="varAffich == 0">
         <ol class="carousel-indicators">
             <li 
-                *ngFor="let slide of [1,2,3]; let i = index"
+                *ngFor="let slide of slides; let i = index"
                 data-target="#carouselExampleCaptions"
                 [attr.data-slide-to]="i"
             ></li>
         </ol>
         <div class="carousel-inner">
-            <div class="carousel-item {{ i == 0 ? 'active' : ''}}" *ngFor="let slide of [1,2,3]; let i = index">
-                <img src="assets/images/imgx1.jpg" class="d-block w-100" style="height: 400px;">
+            <div class="carousel-item {{ i == 0 ? 'active' : ''}}" *ngFor="let slide of slides; let i = index">
+                <img [src]="slide.lien" class="d-block w-100" style="height: 400px;">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-target="#carouselExampleCaptions" data-slide="prev">

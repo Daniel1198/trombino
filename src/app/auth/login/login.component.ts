@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         res => {
           if (res.success) {
             this.loading = false;
-            this.route.navigate(['/rechercherapide']);
+            this.route.navigate(['/admin']);
           }
           else {
             this.loading = false;

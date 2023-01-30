@@ -27,6 +27,7 @@ table {
     width: 100%;
     font-family: 'Montserrat';
     font-size: small;
+    margin-bottom: 15px;
 
     thead {
 
@@ -42,6 +43,7 @@ table {
 
         td {
             padding-left: 10px;
+            padding-block: 7px;
         }
     }
 }
