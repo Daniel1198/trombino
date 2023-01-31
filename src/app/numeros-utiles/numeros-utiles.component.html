@@ -1,30 +1,19 @@
-<div class="card animate__animated animate__fadeIn">
-    <div class="card-header text-info">
-        <i class="fa fa-phone" aria-hidden="true"></i>&nbsp;&nbsp;
-        <strong>Numéros utiles</strong>
+<div class="animate__animated animate__fadeIn p-3">
+    <div class="bg-dark text-white px-3 mb-3 py-2" style="font-family: 'Montserrat';">
+        <small>-- &nbsp;&nbsp; NUMEROS UTILES</small>
     </div>
-    <div *ngIf="loading" class="card-body">
-        <div style="width: max-content;" class="m-auto">
-          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-            <span  class="sr-only">Loading...</span>
-          </div>
-          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-          <div class="spinner-grow text-info" style="width: 20px; height: 20px" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-        </div>
+    <div *ngIf="loading" class="text-center">
+        <app-loader></app-loader>
       </div>
-    <div class="card-body" *ngIf="sites.length > 0 && !loading">
+    <div class="p-2" *ngIf="sites.length > 0 && !loading" style="font-family: 'Montserrat';">
         <div class="accordion" id="accordionExample">
-            <div class="card mb-2" *ngFor="let site of sites">
-                <div class="card-header p-0">
+            <div class="w3-border mb-2" *ngFor="let site of sites">
+                <div class="bg-light">
                     <h2 class="mb-0">
                         <button class="btn btn-block text-left" type="button" data-toggle="collapse"
                             [attr.data-target]="'#S' + site.Id" aria-expanded="true"
                             (click)="getNumBySite(site.Id)">
-                            <i class="fa fa-building" aria-hidden="true"></i>&nbsp;&nbsp;
+                            <i class="fa fa-map-marker-alt" aria-hidden="true"></i>&nbsp;&nbsp;
                             {{ site.LibelleSite }}
                         </button>
                     </h2>

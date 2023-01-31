@@ -10,7 +10,7 @@
                 <img src="assets/images/avatar.png" alt="user_image" class="w-100 h-100 rounded-circle">
             </div>
             <div class="text-light ml-3" style="opacity: .7; font-size: small;">
-                <p class="mb-0">Administrateur</p>
+                <p class="mb-0">{{ currentUser.results.Login }}</p>
                 <a (click)="onLogout()" style="cursor: pointer; color: rgb(255, 71, 71);"><small>Se déconnecter</small></a>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 <li routerLink="/admin/slides" routerLinkActive="current mat-elevation-z1">
                     -- &nbsp;&nbsp; Slides
                 </li>
-                <li routerLink="/admin/utilisateur" routerLinkActive="current mat-elevation-z1">
+                <li routerLink="/admin/utilisateur" routerLinkActive="current mat-elevation-z1" *ngIf="currentUser.results.Administrateur == 1">
                     -- &nbsp;&nbsp; Utilisateurs
                 </li>
             </ul>

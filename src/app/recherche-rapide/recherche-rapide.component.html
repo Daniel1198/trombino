@@ -33,13 +33,12 @@
     <!-- En cas de résulat nul -->
     <div 
         *ngIf="nbrEnr == 0 && !loading"
-        class="w-100 p-5 d-flex flex-column align-items-center justify-content-center animate__animated animate__bounceIn" style="height: 80vh;">
-        <h6>Aucun résultat trouvé</h6>
-        <img src="assets/images/undraw_No_data_re_kwbl.png" alt="" class="img-fluid h-100">
+        class="w-100 p-5 d-flex align-items-center justify-content-center animate__animated animate__bounceIn" style="height: 80vh;">
+        <img src="assets/images/aucun-resultat.png" alt="" class="img-fluid h-75">
     </div>
 
     <!-- Si résulat trouvé -->
-    <div class="container py-3 w3-animate-bottom" *ngIf="varAffich == 1 && !loading && nbrEnr > 0">
+    <div class="container py-3 animate__animated animate__fadeIn" *ngIf="varAffich == 1 && !loading && nbrEnr > 0">
         <div class="text-success txt mb-3">
             <strong>{{ nbrEnr }} Résultat(s) trouvé(s) pour la recherche</strong>
         </div>

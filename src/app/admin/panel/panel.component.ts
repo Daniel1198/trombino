@@ -9,11 +9,14 @@ import Swal from 'sweetalert2';
 })
 export class PanelComponent implements OnInit {
 
+  currentUser: any;
+
   constructor(
     private authService: AuthService
   ) { }
 
   ngOnInit(): void {
+    this.currentUser = this.authService.loggedInUserValue;
   }
 
   onLogout() {
