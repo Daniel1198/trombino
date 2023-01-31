@@ -126,13 +126,19 @@ table {
 .card-profile {
     font-family: 'Inter';
     font-size: small;
-    height: 430px;
+    height: 320px;
     width: 250px;
-    padding-inline: 10px;
+    padding-inline: 5px;
     background-image: url('assets/images/backCard.png');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    transition: transform 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.03);
+    }
     
     .user-profile {
         width: 100px;

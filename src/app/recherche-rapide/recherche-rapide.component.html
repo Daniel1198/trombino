@@ -18,7 +18,7 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item {{ i == 0 ? 'active' : ''}}" *ngFor="let slide of slides; let i = index">
-                <img [src]="slide.lien" class="d-block w-100" style="height: 400px;">
+                <img [src]="slide.lien" class="d-block w-100" style="height: 83vh;">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-target="#carouselExampleCaptions" data-slide="prev">
@@ -43,8 +43,8 @@
             <strong>{{ nbrEnr }} Résultat(s) trouvé(s) pour la recherche</strong>
         </div>
         <div class="p-3 row">
-            <div class="col-sm-4 mb-4" *ngFor="let personnel of personnels">
-                <div class="card-profile w3-border">
+            <div class="col-sm-3 mb-4" *ngFor="let personnel of personnels">
+                <div class="card-profile bg-light w3-border" matTooltip="Voir plus" matTooltipPosition="after" (click)="openDialog(personnel)">
                     <p class="py-1 w-50 text-center txt bg--red m-auto text-white rounded--bottom">
                         <strong>{{ personnel.Matricule }}</strong>
                     </p>
@@ -62,32 +62,29 @@
                             <strong>{{ personnel.Fonction | titlecase }}</strong>
                         </p>
                         <div class="d-flex align-items-center mb-2">
-                            <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger p-1" style="width: 30px; height: 30px;">
-                                <i class="fa fa-mobile-alt text-white" aria-hidden="true"></i>
+                            <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger p-1" style="width: 20px; height: 20px;">
+                                <i class="fa fa-mobile-alt text-white" aria-hidden="true" style="font-size: xx-small;"></i>
                             </div>
                             <div class="ml-2">
                                 {{ personnel.Mobile }}
                             </div>
                         </div>
-                        <div class="d-flex align-items-center mb-2">
+                        <!-- <div class="d-flex align-items-center mb-2">
                             <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger p-1" style="width: 30px; height: 30px;">
                                 <i class="fa fa-envelope text-white" aria-hidden="true"></i>
                             </div>
                             <div class="ml-2 txt txt--blue">
                                 {{ personnel.Email }}
                             </div>
-                        </div>
+                        </div> -->
                         <div class="d-flex align-items-center mb-3">
-                            <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger p-1" style="width: 30px; height: 30px;">
-                                <i class="fa fa-phone text-white" aria-hidden="true"></i>
+                            <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger p-1" style="width: 20px; height: 20px;">
+                                <i class="fa fa-phone text-white" aria-hidden="true" style="font-size: xx-small;"></i>
                             </div>
                             <div class="ml-2 form__label">
-                                {{ personnel.Poste }}
+                                {{ personnel.TelBureau ? personnel.TelBureau : 'Aucun' }}
                             </div>
                         </div>
-                        <button class="bt bt--blue" (click)="openDialog(personnel)">
-                            Voir plus
-                        </button>
                     </div>  
                 </div>
             </div>
