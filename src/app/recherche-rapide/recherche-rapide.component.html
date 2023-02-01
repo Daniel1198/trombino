@@ -44,8 +44,8 @@
         </div>
         <div class="p-3 row">
             <div class="col-sm-3 mb-4" *ngFor="let personnel of personnels">
-                <div class="card-profile bg-light w3-border" matTooltip="Voir plus" matTooltipPosition="after" (click)="openDialog(personnel)">
-                    <p class="py-1 w-50 text-center txt bg--red m-auto text-white rounded--bottom">
+                <div class="card-profile bg-light" matTooltip="Voir plus" matTooltipPosition="after" (click)="openDialog(personnel)">
+                    <p class="py-1 w-50 text-center txt bg--orange m-auto text-white rounded--bottom">
                         <strong>{{ personnel.Matricule }}</strong>
                     </p>
                     <div class="mt-3"></div>
@@ -58,11 +58,11 @@
                                 <strong>{{ personnel.Nom | uppercase }}</strong> {{ personnel.Prenoms | uppercase }}
                             </h5>
                         </div>
-                        <p class="text-center text-danger mb-3 mt-0 text-overflow" style="font-size: x-small;">
+                        <p class="text-center txt--orange mb-3 mt-0 text-overflow" style="font-size: x-small;">
                             <strong>{{ personnel.Fonction | titlecase }}</strong>
                         </p>
                         <div class="d-flex align-items-center mb-2">
-                            <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger p-1" style="width: 20px; height: 20px;">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center bg--orange p-1" style="width: 20px; height: 20px;">
                                 <i class="fa fa-mobile-alt text-white" aria-hidden="true" style="font-size: xx-small;"></i>
                             </div>
                             <div class="ml-2">
@@ -78,7 +78,7 @@
                             </div>
                         </div> -->
                         <div class="d-flex align-items-center mb-3">
-                            <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger p-1" style="width: 20px; height: 20px;">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center bg--orange p-1" style="width: 20px; height: 20px;">
                                 <i class="fa fa-phone text-white" aria-hidden="true" style="font-size: xx-small;"></i>
                             </div>
                             <div class="ml-2 form__label">

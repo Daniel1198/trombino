@@ -92,10 +92,18 @@ table {
     &.txt--blue {
         color: $color-primary;
     }
+
+    &--orange {
+        color: rgba(235, 131, 47, 0.87);
+    }
 }
 
 .bg--blue {
     background-color: $color-primary;
+}
+
+.bg--orange {
+    background-color: rgba(235, 131, 47, 0.87);
 }
 
 .bg--red {
@@ -133,11 +141,13 @@ table {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    transition: transform 0.3s;
+    border: 1px solid rgb(197, 197, 197);
+    transition: all 0.3s;
     cursor: pointer;
 
     &:hover {
         transform: scale(1.03);
+        border: 1px dashed $color-primary;
     }
     
     .user-profile {

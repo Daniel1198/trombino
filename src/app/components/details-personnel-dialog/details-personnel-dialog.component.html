@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-3 border-right">
                     <div class="h-75 d-flex flex-column align-content-between">
-                        <p class="p-1 w-50 rounded m-auto bg--blue border text-center txt text-white">
+                        <p class="p-1 w-50 rounded m-auto bg--orange border text-center txt text-white">
                             <strong>{{ personnel.Matricule }}</strong>
                         </p>
                         <div class="m-auto rounded-circle d-flex align-items-center justify-content-center">
@@ -40,7 +40,7 @@
                                 </svg>
                             </div>
                             <p class="text-danger text-center">
-                                <strong>{{ personnel.TelBureau }}</strong>
+                                <strong>{{ personnel.TelBureau ? personnel.TelBureau : 'Aucun' }}</strong>
                             </p>
                         </div>
                     </div>
