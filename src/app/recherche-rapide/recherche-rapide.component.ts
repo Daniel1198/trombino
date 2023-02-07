@@ -67,7 +67,6 @@ export class RechercheRapideComponent implements OnInit {
     } else {
       this.varAffich = 1;
     }
-    debounceTime(1000);
     this.personnels = this.data.filter((personnel: any) => {
       return replaceAccent(personnel.NomPrenoms).includes(replaceAccent(this.search)) ||
              replaceAccent(personnel.Email).includes(replaceAccent(this.search)) ||
@@ -75,7 +74,6 @@ export class RechercheRapideComponent implements OnInit {
              replaceAccent(personnel.Mobile).split(' ').join('').includes(replaceAccent(this.search))
     });
     this.nbrEnr = this.personnels.length;
-    
   }
 
   openDialog(personnel: any) {

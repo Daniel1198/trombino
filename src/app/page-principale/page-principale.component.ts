@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { debounceTime } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { changeSearchValue } from '../store/action';
 
@@ -37,6 +38,8 @@ export class PagePrincipaleComponent implements OnInit {
   }
 
   onSearch(search: string) {
-    this.store.dispatch(changeSearchValue({ search: search }));
+    setTimeout(() => {
+      this.store.dispatch(changeSearchValue({ search: search }));
+    }, 600)
   }
 }
