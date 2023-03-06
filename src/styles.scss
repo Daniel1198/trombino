@@ -1,9 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
 body {
-    font-family: 'Ubuntu';
+    font-family: 'Montserrat';
+    font-size: small;
+    background: linear-gradient(rgba(255, 255, 255, 0.89), rgba(255, 255, 255, 0.89)), url('assets/images/background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 ::-webkit-scrollbar {
@@ -14,11 +19,162 @@ body {
     background-color: #adadad;
 }
 
-thead {
-    font-family: 'Inter';
+$color-primary: #5483aac7;
+$color-input-border: rgba(0, 0, 0, 0.137);
+
+table {
+    margin-top: 5px;
+    width: 100%;
+    font-family: 'Montserrat';
     font-size: small;
+    margin-bottom: 15px;
+
+    thead {
+
+        th {
+            font-weight: 300;
+            border: 1px dashed rgba(0, 0, 0, 0.199);
+            padding-left: 10px;
+        }
+    }
+    
+    tbody {
+        font-size: small;
+
+        td {
+            padding-left: 10px;
+            padding-block: 7px;
+        }
+    }
 }
 
-tbody {
+.input__search {
+    border: 1px solid $color-input-border;
+    outline: none;
+    box-sizing: border-box;
+    padding-inline: 15px;
+    padding-block: 7px;
+    font-family: 'Inter';
     font-size: small;
+    background-color: transparent;
 }
+
+.bt {
+    padding-inline: 15px;
+    padding-block: 7px;
+    border: none;
+    border-radius: 2px;
+    font-size: small;
+    font-family: 'Inter';
+    outline: none;
+    box-sizing: border-box;
+
+    &.bt--blue {
+        background-color: $color-primary;
+        color: rgba(255, 255, 255, 0.767);
+    }
+
+    &.bt--green {
+        background-color: #54aa5fc7;
+        color: rgba(255, 255, 255, 0.767);
+    }
+
+    &.bt--red {
+        background-color: #aa5454c7;
+        color: rgba(255, 255, 255, 0.767);
+    }
+}
+
+.txt {
+    font-size: small;
+    font-family: 'Inter';
+
+    &.txt--blue {
+        color: $color-primary;
+    }
+
+    &--orange {
+        color: rgba(235, 131, 47, 0.87);
+    }
+}
+
+.bg--blue {
+    background-color: $color-primary;
+}
+
+.bg--orange {
+    background-color: rgba(235, 131, 47, 0.87);
+}
+
+.bg--red {
+    background-color: rgba(204, 40, 40, 0.589);
+}
+
+.form__label {
+    font-size: small;
+    font-family: 'Inter';
+    font-weight: 700;
+}
+
+.form__input, .form__select {
+    display: block;
+    outline: none;
+    box-sizing: border-box;
+    padding: 5px 15px;
+    border: 1px solid $color-input-border;
+    font-size: small;
+    font-family: 'Inter';
+    background-color: transparent;
+}
+
+.form__group {
+    margin-inline: 5px;
+}
+
+.card-profile {
+    font-family: 'Inter';
+    font-size: small;
+    height: 320px;
+    width: 250px;
+    padding-inline: 5px;
+    background-image: url('assets/images/backCard.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border: 1px solid rgb(197, 197, 197);
+    transition: all 0.3s;
+    cursor: pointer;
+
+    &:hover {
+        transform: scale(1.03);
+        border: 1px dashed $color-primary;
+    }
+    
+    .user-profile {
+        width: 100px;
+        height: 120px;
+    }
+
+    .card-title {
+        font-family: 'Inter';
+        font-size: small;
+    }
+}
+
+.rounded--bottom {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.text-overflow {
+    text-overflow: ellipsis; 
+    overflow: hidden; 
+    -o-text-overflow : ellipsis; 
+    display: -webkit-box;    
+    -webkit-line-clamp: 2;  
+    -webkit-box-orient: vertical;
+}
+
+
+
+

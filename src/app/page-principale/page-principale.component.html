@@ -1,103 +1,53 @@
-<mat-sidenav-container class="bg-white">
-    <mat-sidenav mode="side" [(opened)]="opened">
-        <div id="content" class="h-100">
-            <div>
-                <div class="m-auto d-flex justify-content-center flex-column align-items-center">
-                    <img src="favicon.ico" height="50" alt="RTI logo" class="mt-2">
-                    <p class="mb-0 text-white" style="font-size: small; font-family: 'Ubuntu'">Trombino</p>
-                </div>
-                <hr class="bg-light mb-3" style="opacity: .2;">
-                <div class="px-3 overflow-auto" style="height: 67vh;" id="scroll-menu">
-                    <li matTooltip="Recherche rapide" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
-                        <a routerLink="/rechercherapide">
-                            <i class="link fa fa-search" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li matTooltip="Recherche avancée" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
-                        <a routerLink="/rechercheavancee">
-                            <i class="link fa fa-address-card" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <li matTooltip="Numéros utiles" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
-                        <a routerLink="/numerosutiles">
-                            <i class="link fa fa-phone" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                    <div *ngIf="connected && connected.success">
-                        <li matTooltip="Site" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
-                            <a [routerLink]="['/admin/site']">
-                                <i class="link fa fa-building" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        
-                        <li matTooltip="Direction" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
-                            <a [routerLink]="['/admin/direction']">
-                                <i class="link fa fa-users-gear" aria-hidden="true"></i>
-                            </a>
-                        </li>
-    
-                        <li matTooltip="Département" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
-                            <a [routerLink]="['/admin/departement']">
-                                <i class="link fa fa-sitemap" aria-hidden="true"></i>
-                            </a>
-                        </li>
-    
-                        <li matTooltip="Service" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
-                            <a [routerLink]="['/admin/service']">
-                                <i class="link fa fa-cogs" aria-hidden="true"></i>
-                            </a>
-                        </li>
-    
-                        <li matTooltip="Personnel" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
-                            <a routerLink="/admin/listepersonnel">
-                                <i class="link fa fa-users" aria-hidden="true"></i>
-                            </a>
-                        </li>
-    
-                        <li matTooltip="Slides" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
-                            <a [routerLink]="['/admin/slides']">
-                                <i class="link fa fa-images" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                        
-                        <li *ngIf="connected && connected.results.Administrateur == 1" matTooltip="Utilisateur" matTooltipPosition="right" routerLinkActive="current mat-elevation-z2">
-                            <a [routerLink]="['/admin/utilisateur']">
-                                <i class="link fa fa-user" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    </div>
-                </div>
+<div id="body" style="height: 100vh;">
+    <header class="px-1 py-3 d-flex shadow justify-content-between align-items-center w3-animate-right">
+        <div class="h-100 d-flex align-items-center px-3" style="border-right: 1px dashed rgba(0, 0, 0, 0.288);">
+            <img src="favicon.ico" width="50">
+            <h5 class="ml-3 font-weight-bold mt-1" style="font-family: 'Montserrat';">Trombino</h5>
+        </div>
+        <div 
+        style="width: 35%;"
+        class="{{ isFadeOut ? 'animate__animated animate__fadeOutLeft' : 'w3-animate-left' }}" 
+        *ngIf="isFastSearch">
+            <input type="search" class="w-100" placeholder="Tapez votre recherche..." #search (keyup)="onSearch(search.value)">
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="d-flex">
+                <a routerLink="/rechercherapide" class="link d-flex align-items-center" routerLinkActive="current" (click)="onChangePage(true)">
+                    <i class="fa fa-search mr-2" aria-hidden="true"></i>
+                    Recherche rapide
+                </a>
+                <a routerLink="/rechercheavancee" class="link ml-3 d-flex align-items-center" routerLinkActive="current" (click)="onChangePage(false)">
+                    <i class="fa fa-address-card mr-2"></i>
+                    Recherche avancée
+                </a>
+                <a routerLink="/numerosutiles" class="link ml-3 mr-2 d-flex align-items-center" routerLinkActive="current" (click)="onChangePage(false)">
+                    <i class="fa fa-phone mr-2"></i>
+                    Numéros utiles
+                </a>
             </div>
-            <div>
-                <hr class="bg-light" style="opacity: .2;">
-                <li matTooltip="{{ connected ? 'Se déconnecter' : 'Se connecter' }}" matTooltipPosition="right" class="mx-2">
-                    <a routerLink="/auth/login" *ngIf="!connected">
-                        <i class="fa fa-user-circle fa-2x" style="opacity: .5;" aria-hidden="true"></i>
-                    </a>
-                    <button *ngIf="connected" class="btn" (click)="onSignOut()">
-                        <i class="fa fa-user-circle fa-2x" style="opacity: .5;" aria-hidden="true"></i>
-                    </button>
-                </li>
+            <div style="border-left: 1px dashed rgba(0, 0, 0, 0.288);" class="pl-1">
+                <a routerLink="/auth/login" class="d-flex align-items-center justify-content-center">
+                    <i class="fa fa-user-circle mr-2"></i>
+                    Se connecter
+                </a>
             </div>
         </div>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <div class="text-dark" id="content-wrapper">
-            <div class="px-3 bg-danger text-white pt-1 fixed-top" style="font-family: 'Ubuntu'; font-size: small;">
-                <marquee behavior="" direction="left">
-                    Support Informatique : 911 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-                    Entretien et Réparation : 4277 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    La guérite : 4274 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Sécurité (hall) : 4174 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Service froid : 4287 / 4263 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Service éléctricité : 4286 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    Infirmérie : 4774 / 4724 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <!-- Service nettoyage : 4118 -->
-                </marquee>
-            </div>
-            <div class="pt-5 px-3 pb-3">
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+    </header>
+    
+    <div class="px-3 text-white w3-animate-left" style="font-family: 'Montserrat'; font-size: small; background-color: #2c5989d3;">
+        <marquee behavior="" direction="left" class="mt-1">
+            Support Informatique : 911 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+            Entretien et Réparation : 4277 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            La guérite : 4274 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Sécurité (hall) : 4174 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Service froid : 4287 / 4263 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Service éléctricité : 4286 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Infirmérie : 4774 / 4724 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- Service nettoyage : 4118 -->
+        </marquee>
+    </div>
+
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,22 +1,19 @@
-<div class="card" style="font-size: small;">
-    <div class="card-header py-1 text-white bg-info d-flex justify-content-between" mat-dialog-title>
-        <strong style="font-size: small; font-family: 'Inter';">Plus d'informations</strong>
-        <button class="btn btn-sm text-white" mat-dialog-close>
-            <i class="fa fa-close" aria-hidden="true"></i>
-        </button>
+<div class="txt">
+    <div class="bg-dark text-white px-3 mb-1 py-2 d-flex justify-content-between align-items-center" style="font-family: 'Montserrat';">
+        <small>-- Plus d'informations</small>
+        <i class="fa fa-close" aria-hidden="true" mat-dialog-close></i>
     </div>
-    <div class="card-body px-3 py-0">
+    <div class="px-3 py-2">
         <mat-dialog-content>
             <div class="row">
                 <div class="col-3 border-right">
                     <div class="h-75 d-flex flex-column align-content-between">
-                        <p class="p-1 w-50 rounded-pill border text-center text-danger">
+                        <p class="p-1 w-50 rounded m-auto bg--orange border text-center txt text-white">
                             <strong>{{ personnel.Matricule }}</strong>
                         </p>
-                        <div class="m-auto rounded-circle d-flex align-items-center justify-content-center"
-                            id="imageContainer">
-                            <div id="user-profile" class="rounded-circle shadow">
-                                <img [src]="personnel.Photo" alt="Photo de profile" class="img-fluid w-100 h-100 rounded-circle">
+                        <div class="m-auto rounded-circle d-flex align-items-center justify-content-center">
+                            <div class="user-profile img-thumbnail my-4">
+                                <img [src]="personnel.Photo" alt="Photo de profile" class="img-fluid w-100 h-100">
                             </div>
                         </div>
                         <div>
@@ -43,47 +40,47 @@
                                 </svg>
                             </div>
                             <p class="text-danger text-center">
-                                <strong>{{ personnel.TelBureau }}</strong>
+                                <strong>{{ personnel.TelBureau ? personnel.TelBureau : 'Aucun' }}</strong>
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-9">
                     <div class="d-flex">
-                        <div class="form-group mr-3 w-50">
-                            <label for="" class="form-label">Nom</label>
-                            <input type="text" class="form-control form-control-sm" [value]="personnel.Nom" disabled>
+                        <div class="form__group mb-3 mr-3 w-50">
+                            <label for="" class="form__label">Nom</label>
+                            <input type="text" class="form__input w-100" [value]="personnel.Nom" disabled>
                         </div>
-                        <div class="form-group w-50">
-                            <label for="" class="form-label">Prénom(s)</label>
-                            <input type="text" class="form-control form-control-sm" [value]="personnel.Prenoms" disabled>
+                        <div class="form__group mb-3 w-50">
+                            <label for="" class="form__label">Prénom(s)</label>
+                            <input type="text" class="form__input w-100" [value]="personnel.Prenoms" disabled>
                         </div>
                     </div>
                     <div class="d-flex">
-                        <div class="form-group mr-3 w-50">
-                            <label for="" class="form-label">Téléphone</label>
-                            <input type="text" class="form-control form-control-sm" [value]="personnel.Mobile" disabled>
+                        <div class="form__group mb-3 mr-3 w-50">
+                            <label for="" class="form__label">Téléphone</label>
+                            <input type="text" class="form__input w-100" [value]="personnel.Mobile" disabled>
                         </div>
-                        <div class="form-group w-50">
-                            <label for="" class="form-label">Email</label>
-                            <input type="text" class="form-control form-control-sm" [value]="personnel.Email" disabled>
+                        <div class="form__group mb-3 w-50">
+                            <label for="" class="form__label">Email</label>
+                            <input type="text" class="form__input w-100" [value]="personnel.Email" disabled>
                         </div>
                     </div>
-                    <div class="form-group w-100">
-                        <label for="" class="form-label">Fonction</label>
-                        <input type="text" class="form-control form-control-sm" [value]="personnel.Fonction" disabled>
+                    <div class="form__group mb-3 w-100">
+                        <label for="" class="form__label">Fonction</label>
+                        <input type="text" class="form__input w-100" [value]="personnel.Fonction" disabled>
                     </div>
-                    <div class="form-group w-100">
-                        <label for="" class="form-label">Service</label>
-                        <input type="text" class="form-control form-control-sm" [value]="personnel.LibelleService" disabled>
+                    <div class="form__group mb-3 w-100">
+                        <label for="" class="form__label">Service</label>
+                        <input type="text" class="form__input w-100" [value]="personnel.LibelleService" disabled>
                     </div>
-                    <div class="form-group w-100">
-                        <label for="" class="form-label">Département</label>
-                        <input type="text" class="form-control form-control-sm" [value]="personnel.LibelleDepartement" disabled>
+                    <div class="form__group mb-3 w-100">
+                        <label for="" class="form__label">Département</label>
+                        <input type="text" class="form__input w-100" [value]="personnel.LibelleDepartement" disabled>
                     </div>
-                    <div class="form-group w-100">
-                        <label for="" class="form-label">Direction</label>
-                        <input type="text" class="form-control form-control-sm" [value]="personnel.LibelleDirection" disabled>
+                    <div class="form__group mb-3 w-100">
+                        <label for="" class="form__label">Direction</label>
+                        <input type="text" class="form__input w-100" [value]="personnel.LibelleDirection" disabled>
                     </div>
                 </div>
             </div>

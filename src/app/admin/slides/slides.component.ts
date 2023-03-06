@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { SlideService } from 'src/app/services/slide.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-slides',
@@ -13,9 +13,20 @@ export class SlidesComponent implements OnInit {
   previewImages: any = [];
   updatedFile: any;
 
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
   constructor(
-    private slideService: SlideService,
-    private toastr: ToastrService
+    private slideService: SlideService
   ) { }
 
   ngOnInit(): void {
@@ -52,11 +63,17 @@ export class SlidesComponent implements OnInit {
         this.slideService.new(formData).subscribe(
           result => {
             if (result.success) {
-              this.toastr.success(result.message);
+              this.Toast.fire({
+                icon: 'success',
+                title: result.message
+              })
               this.getAllSlide();
             }
             else {
-              this.toastr.error(result.message);
+              this.Toast.fire({
+                icon: 'error',
+                title: result.message
+              })
             }
           }
         );
@@ -66,20 +83,32 @@ export class SlidesComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    const confirmDeleting = confirm('Voulez-vous vraiment supprimer ce slide ?');
-    if (confirmDeleting) {
-      this.slideService.delete(id).subscribe(
-        result => {
-          if (result.success) {
-            this.toastr.success(result.message);
-            this.getAllSlide();
+    Swal.fire({
+      title: 'Voulez-vous vraiment supprimer cette image ?',
+      showDenyButton: true,
+      confirmButtonText: 'Oui',
+      denyButtonText: `Non`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.slideService.delete(id).subscribe(
+          result => {
+            if (result.success) {
+              this.Toast.fire({
+                icon: 'success',
+                title: result.message
+              })
+              this.getAllSlide();
+            }
+            else {
+              this.Toast.fire({
+                icon: 'error',
+                title: result.message
+              })
+            }
           }
-          else {
-            this.toastr.error(result.message);
-          }
-        }
-      );
-    }
+        );
+      }
+    })
   }
 
   onUpdate(id: string, index: number) {
@@ -87,21 +116,33 @@ export class SlidesComponent implements OnInit {
     formData.append('id', id);
     formData.append('lien', this.updatedFile);
 
-    const confirmUpdating = confirm("Enregistrer la modification ?");
-    if (confirmUpdating) {
-      this.slideService.update(formData).subscribe(
-        result => {
-          if (result.success) {
-            this.toastr.success(result.message);
-            this.getAllSlide();
-            this.previewImages[index] = '';
+    Swal.fire({
+      title: 'Voulez-vous vraiment enregistrer la modification apportée ?',
+      showDenyButton: true,
+      confirmButtonText: 'Oui',
+      denyButtonText: `Non`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.slideService.update(formData).subscribe(
+          result => {
+            if (result.success) {
+              this.Toast.fire({
+                icon: 'success',
+                title: result.message
+              })
+              this.getAllSlide();
+              this.previewImages[index] = '';
+            }
+            else {
+              this.Toast.fire({
+                icon: 'error',
+                title: result.message
+              })
+            }
           }
-          else {
-            this.toastr.error(result.message);
-          }
-        }
-      );
-    }
+        );
+      }
+    })
   }
 
 }

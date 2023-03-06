@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { UtilisateurService } from 'src/app/services/utilisateur.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-utilisateur',
@@ -23,10 +22,21 @@ export class UtilisateurComponent implements OnInit {
   loading: boolean = false;
   loadingEdit: boolean = false;
 
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
   constructor(
     private builder: FormBuilder,
-    private utilisateurService: UtilisateurService,
-    private toastr: ToastrService
+    private utilisateurService: UtilisateurService
   ) { }
 
   ngOnInit(): void {
@@ -105,40 +115,56 @@ export class UtilisateurComponent implements OnInit {
       this.loadingEdit = true;
       this.utilisateurService.creatUtilisateur(formData).subscribe(
         result => {
+          this.loading = false;
           if (result.success) {
-            this.loading = false;
-            this.toastr.success(result.message);
+            this.Toast.fire({
+              icon: 'success',
+              title: result.message
+            })
             this.getUsers();
             this.onCancel();
           }
           else {
-            this.loading = false;
-            this.toastr.error(result.message);
+            this.Toast.fire({
+              icon: 'error',
+              title: result.message
+            })
           }
         }
       );
     }
 
     else {
-      const confirmUpdating = confirm("Voulez-vous enregistrer les modifications apportées ?");
-
-      if (confirmUpdating) {
-        this.loadingEdit = true;
-        this.utilisateurService.updateUtilisateur(formData).subscribe(
-          result => {
-            if (result.success) {
+      Swal.fire({
+        title: 'Voulez-vous vraiment enregistrer les modifications apportées ?',
+        showDenyButton: true,
+        confirmButtonText: 'Oui',
+        denyButtonText: `Non`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.loadingEdit = true;
+          this.utilisateurService.updateUtilisateur(formData).subscribe(
+            result => {
               this.loadingEdit = false;
-              this.toastr.success(result.message);
-              this.getUsers();
-              this.onCancel();
+              if (result.success) {
+                this.Toast.fire({
+                  icon: 'success',
+                  title: result.message
+                })
+                this.getUsers();
+                this.onCancel();
+              }
+              else {
+                this.Toast.fire({
+                  icon: 'error',
+                  title: result.message
+                })
+              }
             }
-            else {
-              this.loading = false;
-              this.toastr.error(result.message);
-            }
-          }
-        );
-      }
+          );
+          this.onCancel();
+        }
+      })
     }
   }
 

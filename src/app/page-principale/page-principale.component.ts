@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { debounceTime } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { changeSearchValue } from '../store/action';
 
 @Component({
   selector: 'app-page-principale',
@@ -8,24 +12,34 @@ import { AuthService } from '../services/auth.service';
 })
 export class PagePrincipaleComponent implements OnInit {
 
-  opened:boolean = true;
-  connected: any;
+  isFastSearch: boolean = true;
+  isFadeOut: boolean = false;
 
   constructor(
-    private authService: AuthService
+    private router: Router,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
-    this.connected = this.authService.loggedInUserValue 
+    if (window.location.pathname !== '/rechercherapide')
+      this.isFastSearch = false;
   }
 
-  onSignOut() {
-    const confirmSignout = confirm("Vous allez être déconnecté.");
-
-    if (confirmSignout) {
-      this.authService.logoutUser();
-      location.reload();
+  onChangePage(isFastSearch: boolean) {
+    this.isFadeOut = !isFastSearch;
+    if (this.isFastSearch) {
+      setTimeout(() => this.isFastSearch = isFastSearch, 800)
+    }
+    else {
+      this.isFastSearch = isFastSearch;
+      this.isFadeOut = false;
+      this.store.dispatch(changeSearchValue({ search: '' }));
     }
   }
 
+  onSearch(search: string) {
+    setTimeout(() => {
+      this.store.dispatch(changeSearchValue({ search: search }));
+    }, 600)
+  }
 }

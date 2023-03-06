@@ -1,9 +1,8 @@
-<div class="card">
-    <div class="card-header">
-        <i class="fa fa-images" aria-hidden="true"></i>&nbsp;&nbsp;
-        Gestion des slides
+<div class="animate__animated animate__fadeIn">
+    <div class="bg-dark text-white px-3 mb-3 py-2" style="font-family: 'Montserrat';">
+        <small>-- &nbsp;&nbsp; GESTION DES SLIDES</small>
     </div>
-    <div class="card-body row">
+    <div class="row">
         <div class="col-4 mb-3" style="height: 200px;" *ngFor="let slide of images; let i = index">
             <img [src]="previewImages[i].length > 0 ? previewImages[i] : slide.lien" alt="slide1" class="img-fluid img-thumbnail w-100 h-100 position-relative">
             <div 
@@ -36,13 +35,13 @@
         </div>
         
         <div class="col-4 mb-3 text-center" style="height: 200px;">
-            <img src="assets/images/back-add-slide.jpg" alt="slide1" class="img-fluid h-100 position-relative">
+            <img src="assets/images/back-add-slide.png" alt="slide1" class="img-fluid h-100 position-relative">
             <div 
-                class="h-100 w-100 bg-white position-absolute d-flex align-items-center justify-content-center" 
+                class="h-100 w-100 position-absolute d-flex align-items-center justify-content-center" 
                 style="z-index: 1; top: 0; right: 0; opacity: .8;">
                 <div>
                     <input type="file" id="addfile" (change)="onFileChange($event, -1, true)">
-                    <button class="btn btn-outline-secondary btn-sm rounded-circle" matTooltip="Nouveau slide" matTooltipPosition="right">
+                    <button class="btn btn-secondary btn-sm rounded-circle" matTooltip="Nouveau slide" matTooltipPosition="right">
                         <label for="addfile" class="m-0" style="cursor: pointer;">
                             <i class="fa fa-add" aria-hidden="true"></i>
                         </label>

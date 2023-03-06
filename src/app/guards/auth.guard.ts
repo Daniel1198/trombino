@@ -8,7 +8,6 @@ import {
 } from '@angular/router';
 
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,6 @@ import { AuthService } from '../services/auth.service';
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private authService: AuthService,
     private router: Router
   ) {
 
@@ -30,7 +28,7 @@ export class AuthGuard implements CanActivate {
       return true;
     }
     else {
-      this.router.navigateByUrl('/auth');
+      this.router.navigateByUrl('/rechercherapide');
       return false;
     }
   }

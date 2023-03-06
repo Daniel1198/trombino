@@ -1,0 +1,65 @@
+<div style="height: 100vh;" class="d-flex">
+    <div class="bg-dark mat-elevation-z8 h-100 p-3" style="width: 18%;">
+        <div class="d-flex align-items-center justify-content-center">
+            <img src="favicon.ico" alt="logo" width="40">
+            <h6 class="text-light ml-3 mt-2" style="opacity: .5; font-family: 'Montserrat';">Trombino admin</h6>
+        </div>
+        <hr class="bg-light" style="opacity: .2; border: 1px dashed;">
+        <div class="d-flex align-items-center">
+            <div class="rounded-circle shadow p-1" style="width: 60px; height: 60px; border: 2px solid #2c5989d3;">
+                <img src="assets/images/avatar.png" alt="user_image" class="w-100 h-100 rounded-circle">
+            </div>
+            <div class="text-light ml-3" style="opacity: .7; font-size: small;">
+                <p class="mb-0">{{ currentUser.results.Login }}</p>
+                <a (click)="onLogout()" style="cursor: pointer; color: rgb(255, 71, 71);"><small>Se déconnecter</small></a>
+            </div>
+        </div>
+        <div class="my-3 text-light">
+            <small>MENU DE BORD</small>
+        </div>
+        <div id="menu">
+            <ul>
+                <li routerLink="/admin/listepersonnel" routerLinkActive="current mat-elevation-z1">
+                    -- &nbsp;&nbsp; Agents
+                </li>
+                <li routerLink="/admin/site" routerLinkActive="current mat-elevation-z1">
+                    -- &nbsp;&nbsp; Sites
+                </li>
+                <li routerLink="/admin/direction" routerLinkActive="current mat-elevation-z1">
+                    -- &nbsp;&nbsp; Directions
+                </li>
+                <li routerLink="/admin/departement" routerLinkActive="current mat-elevation-z1">
+                    -- &nbsp;&nbsp; Départements
+                </li>
+                <li routerLink="/admin/service" routerLinkActive="current mat-elevation-z1">
+                    -- &nbsp;&nbsp; Services
+                </li>
+                <li routerLink="/admin/slides" routerLinkActive="current mat-elevation-z1">
+                    -- &nbsp;&nbsp; Slides
+                </li>
+                <li routerLink="/admin/utilisateur" routerLinkActive="current mat-elevation-z1" *ngIf="currentUser.results.Administrateur == 1">
+                    -- &nbsp;&nbsp; Utilisateurs
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="h-100 overflow-auto" style="width: 82%;">
+        <header class="p-1 font-weight-bold bg-light" 
+        style="font-size: small; font-family: 'Montserrat'; color: rgba(49, 79, 143, 0.74);">
+            <marquee behavior="" direction="left" class="mt-1">
+                Support Informatique : 911 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                Entretien et Réparation : 4277 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                La guérite : 4274 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Sécurité (hall) : 4174 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Service froid : 4287 / 4263 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Service éléctricité : 4286 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Infirmérie : 4774 / 4724 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <!-- &nbsp;&nbsp; Service nettoyage : 4118 -- &nbsp;&nbsp;-->
+            </marquee>
+        </header>
+        <div class="p-3">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
+

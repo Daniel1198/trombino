@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { DepartementService } from 'src/app/services/departement.service';
 import { DirectionService } from 'src/app/services/direction.service';
 import { PersonnelService } from 'src/app/services/personnel.service';
 import { ServiceficService } from 'src/app/services/servicefic.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ajout-personnel',
@@ -23,14 +23,25 @@ export class AjoutPersonnelComponent implements OnInit {
   loading: boolean = false;
   previewImage: any = '';
 
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
   constructor(
     private directionService: DirectionService,
     private departementService: DepartementService,
     private serviceficService: ServiceficService,
     private personnelService: PersonnelService,
     private builder: FormBuilder,
-    private route: ActivatedRoute,
-    private toastr: ToastrService
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -142,36 +153,52 @@ export class AjoutPersonnelComponent implements OnInit {
       this.loading = true;
       this.personnelService.creatPersonnel(formData).subscribe(
         result => {
+          this.loading = false;
           if (result.success) {
-            this.toastr.success(result.message);
+            this.Toast.fire({
+              icon: 'success',
+              title: result.message
+            })
             this.formGroup.reset();
           }
-          else
-            this.toastr.error(result.message);
-          
-          this.loading = false;
+          else {
+            this.Toast.fire({
+              icon: 'error',
+              title: result.message
+            })
+          }
         }
       );
     } else {
-      const confirmUpdating = confirm("Voulez-vous vraiment enregistrer les modifications apportées ?");
 
-      if (confirmUpdating) {
-        this.loading = true;
-        this.personnelService.updatePersonnel(formData).subscribe(
-          result => {
-            console.log(result);
-            if (result.success) {
-              this.toastr.success(result.message);
+      Swal.fire({
+        title: 'Voulez-vous vraiment enregistrer les modifications apportées ?',
+        showDenyButton: true,
+        confirmButtonText: 'Oui',
+        denyButtonText: `Non`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          this.loading = true;
+          this.personnelService.updatePersonnel(formData).subscribe(
+            result => {
+              this.loading = false;
+              if (result.success) {
+                this.Toast.fire({
+                  icon: 'success',
+                  title: result.message
+                })
+              }
+              else {
+                this.Toast.fire({
+                  icon: 'error',
+                  title: result.message
+                })
+              }
             }
-            else {
-              this.toastr.error(result.message);
-            }
-
-            this.loading = false;
-          }
-        );
-      }
-
+          );
+        }
+      })
     }
   }
 

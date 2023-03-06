@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { PersonnelService } from 'src/app/services/personnel.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-personnel',
@@ -17,10 +17,21 @@ export class PersonnelComponent implements OnInit {
   personnels: any = [];
   nbrEnr: number = 0;
   loading: boolean = false;
+
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
   
   constructor(
-    private personnelService: PersonnelService,
-    private toastr: ToastrService
+    private personnelService: PersonnelService
   ) { }
 
   ngOnInit(): void {
@@ -41,23 +52,34 @@ export class PersonnelComponent implements OnInit {
   }
 
   onDelete(id: number) {
-    let confirmDeleting = confirm('Voulez-vous vraiment supprimer cet employé ?');
-
-    if (confirmDeleting) {
-      this.loading = true;
-      this.personnelService.deletePersonnel(id).subscribe(
-        result => {
-          this.loading = false;
-          if (result.success) {
-            this.toastr.success(result.message);
-            this.getAllEmployee();
+    Swal.fire({
+      title: 'Voulez-vous vraiment supprimer cet agent ?',
+      showDenyButton: true,
+      confirmButtonText: 'Oui',
+      denyButtonText: `Non`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.loading = true;
+        this.personnelService.deletePersonnel(id).subscribe(
+          result => {
+            this.loading = false;
+            if (result.success) {
+              this.Toast.fire({
+                icon: 'success',
+                title: result.message
+              })
+            }
+            else {
+              this.Toast.fire({
+                icon: 'error',
+                title: result.message
+              })
+            }
           }
-          else {
-            this.toastr.error(result.message);
-          }
-        }
-      )
-    }
+        )
+      }
+    })
   }
 
   onSearch(search: string) {
